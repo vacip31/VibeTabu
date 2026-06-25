@@ -31,7 +31,8 @@ import {
     initAudio, 
     playCorrect, 
     playTabu, 
-    playTimeOver 
+    playTimeOver,
+    playTransition
 } from './audio.js';
 
 // Global Oyun Değişkenleri
@@ -113,12 +114,23 @@ function setupEventListeners() {
         });
     }
 
-    const btnSplashAbout = document.getElementById('btn-splash-about');
-    if (btnSplashAbout) {
-        btnSplashAbout.addEventListener(clickEvent, (e) => {
+    // Nasıl Oynanır? (Kurallar Ekranına Geçiş)
+    const btnSplashRules = document.getElementById('btn-splash-rules');
+    if (btnSplashRules) {
+        btnSplashRules.addEventListener(clickEvent, (e) => {
             e.preventDefault();
             initAudio();
-            alert("VibeTabu - Luxe Edition v1.0.0\n\nModern, siber-minimalist ve çevrimdışı PWA Tabu oyunu.\n\nİyi eğlenceler!");
+            showView(views.rules);
+        });
+    }
+
+    // Kurallar Ekranından Başlangıç Ekranına Dönüş
+    const btnRulesBack = document.getElementById('btn-rules-back');
+    if (btnRulesBack) {
+        btnRulesBack.addEventListener(clickEvent, (e) => {
+            e.preventDefault();
+            initAudio();
+            showView(views.splash);
         });
     }
     

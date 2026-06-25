@@ -65,14 +65,8 @@
         <!-- Atmosferik Arka Plan Işıması -->
         <div class="glow-bg"></div>
 
-        <!-- Üst Alan (Ayarlar/Hakkında) -->
-        <div class="h-12 w-full flex justify-end relative z-10">
-            <button aria-label="Bilgi"
-                class="glass-btn-icon w-12 h-12 rounded-full flex items-center justify-center backdrop-blur-md active:scale-95 transition-transform"
-                id="btn-splash-about">
-                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">info</span>
-            </button>
-        </div>
+        <!-- Üst Spacers -->
+        <div class="h-12 w-full relative z-10"></div>
 
         <!-- Orta Logo Alanı -->
         <div class="flex-1 flex flex-col items-center justify-center w-full mt-[-48px] relative z-10">
@@ -98,12 +92,17 @@
             </div>
         </div>
 
-        <!-- Alt Başla Butonu -->
-        <div class="w-full flex justify-center pb-8 relative z-10">
+        <!-- Alt Butonlar -->
+        <div class="w-full flex flex-col items-center gap-3 pb-8 relative z-10">
             <button id="btn-splash-start"
                 class="glass-btn-primary w-[280px] py-4 rounded-full flex items-center justify-center gap-3 text-white font-medium text-lg tracking-wider active:scale-95 transition-all">
                 <span>Oyuna Başla</span>
                 <span class="material-symbols-outlined text-primary">play_circle</span>
+            </button>
+            <button id="btn-splash-rules"
+                class="border border-white/10 hover:border-white/20 w-[280px] py-3.5 rounded-full flex items-center justify-center gap-3 text-white/70 hover:text-white font-light text-sm tracking-wider active:scale-95 transition-all bg-black/20 backdrop-blur-md">
+                <span>Nasıl Oynanır?</span>
+                <span class="material-symbols-outlined text-white/50 text-base">help</span>
             </button>
         </div>
     </section>
@@ -518,6 +517,85 @@
                     <span class="material-symbols-outlined text-[18px]">home</span>
                     Ana Menüye Dön
                 </button>
+            </div>
+        </main>
+    </section>
+
+    <!-- 8. GÖRÜNÜM: OYUN KURALLARI EKRANI (YENİ GÖRÜNÜM) -->
+    <section id="view-rules" class="game-view flex flex-col w-full h-[100dvh] overflow-hidden relative bg-black">
+        <header
+            class="bg-black/80 backdrop-blur-md fixed top-0 w-full z-50 border-b border-white/5 flex items-center justify-center px-container-padding h-16 relative">
+            <button id="btn-rules-back"
+                class="text-primary hover:opacity-80 transition-opacity active:scale-95 flex items-center justify-center absolute left-4">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </button>
+            <h1 class="font-display text-[20px] text-primary uppercase tracking-[0.25em] font-light">KURALLAR</h1>
+        </header>
+
+        <main class="flex-1 pt-20 pb-12 px-container-padding overflow-y-auto w-full max-w-[600px] mx-auto flex flex-col gap-6">
+            <!-- Atmosferik Işıma -->
+            <div class="ambient-glow animate-pulse-slow"></div>
+
+            <div class="flex flex-col gap-6 relative z-10 mt-4">
+                <!-- Temel Hedef Kartı -->
+                <div class="glass-panel rounded-2xl p-6 flex flex-col gap-4 shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-primary text-2xl">ads_click</span>
+                        <h2 class="font-display text-lg text-white font-light tracking-wide">Oyunun Amacı</h2>
+                    </div>
+                    <p class="font-body text-sm text-white/70 font-light leading-relaxed">
+                        Takım arkadaşlarına, ekranın en üstündeki hedef kelimeyi, altındaki <span class="text-error font-medium">5 yasaklı kelimeyi</span> veya hedef kelimenin herhangi bir parçasını kullanmadan süreniz dahilinde anlatmaktır.
+                    </p>
+                </div>
+
+                <!-- Puanlama Kuralları Kartı -->
+                <div class="glass-panel rounded-2xl p-6 flex flex-col gap-5 shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
+                    <div class="flex items-center gap-3 mb-1">
+                        <span class="material-symbols-outlined text-primary text-2xl">military_tech</span>
+                        <h2 class="font-display text-lg text-white font-light tracking-wide">Puanlama Sistemi</h2>
+                    </div>
+                    
+                    <div class="flex flex-col gap-4">
+                        <div class="flex gap-4 items-start">
+                            <span class="material-symbols-outlined text-primary text-xl mt-0.5" style="font-variation-settings: 'FILL' 1;">add_circle</span>
+                            <div class="flex flex-col gap-0.5">
+                                <span class="font-body text-sm text-white font-medium">Doğru (+1 Puan)</span>
+                                <span class="font-body text-xs text-white/50 font-light">Kelime başarıyla tahmin edildiğinde basılır. Takımınıza 1 puan kazandırır.</span>
+                            </div>
+                        </div>
+                        
+                        <div class="h-px bg-white/5 w-full"></div>
+                        
+                        <div class="flex gap-4 items-start">
+                            <span class="material-symbols-outlined text-error text-xl mt-0.5" style="font-variation-settings: 'FILL' 1;">remove_circle</span>
+                            <div class="flex flex-col gap-0.5">
+                                <span class="font-body text-sm text-white font-medium">Tabu (-2 Puan)</span>
+                                <span class="font-body text-xs text-white/50 font-light">Yasaklı kelimelerden biri söylendiğinde basılır. Takımınızdan 2 puan düşer.</span>
+                            </div>
+                        </div>
+                        
+                        <div class="h-px bg-white/5 w-full"></div>
+                        
+                        <div class="flex gap-4 items-start">
+                            <span class="material-symbols-outlined text-white/40 text-xl mt-0.5" style="font-variation-settings: 'FILL' 1;">fast_forward</span>
+                            <div class="flex flex-col gap-0.5">
+                                <span class="font-body text-sm text-white font-medium">Pas (0 Puan)</span>
+                                <span class="font-body text-xs text-white/50 font-light">Anlatılamayan kelimeleri geçmek için kullanılır. Puanınızı etkilemez, ancak oyun ayarlarındaki pas limiti kadar kullanılabilir.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tur Sonu İnceleme Kartı -->
+                <div class="glass-panel rounded-2xl p-6 flex flex-col gap-4 shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-primary text-2xl">edit_square</span>
+                        <h2 class="font-display text-lg text-white font-light tracking-wide">Karar Düzeltme & İtiraz</h2>
+                    </div>
+                    <p class="font-body text-sm text-white/70 font-light leading-relaxed">
+                        Tur bittiğinde oynadığınız tüm kartları inceleyebileceğiniz bir ekran açılır. Yanlışlıkla bastığınız kararları (örneğin aslında Tabu olan ama Doğru basılan durumları) kartları kaydırarak düzeltebilirsiniz. Skorlar anlık olarak yeniden hesaplanır.
+                    </p>
+                </div>
             </div>
         </main>
     </section>

@@ -188,16 +188,20 @@ body {
 
 /* Ekran Gösterim/Gizleme ve Geçiş Animasyonları */
 .game-view {
+    position: absolute;
+    inset: 0;
     display: none !important;
     height: 100dvh;
+    width: 100vw;
     overflow: hidden;
     opacity: 0;
-    transform: scale3d(0.96, 0.96, 1);
-    filter: blur(8px);
-    transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1), 
-                transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-                filter 0.35s ease;
+    transform: scale3d(0.94, 0.94, 1);
+    filter: blur(12px);
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+                transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                filter 0.4s ease-out;
     will-change: opacity, transform, filter;
+    flex-direction: column;
 }
 
 .game-view.active-view, .game-view.transitioning {
@@ -208,12 +212,14 @@ body {
     opacity: 1;
     transform: scale3d(1, 1, 1);
     filter: blur(0px);
+    z-index: 10;
 }
 
 .game-view.fade-out {
     opacity: 0;
-    transform: scale3d(1.04, 1.04, 1);
-    filter: blur(8px);
+    transform: scale3d(1.06, 1.06, 1);
+    filter: blur(12px);
+    z-index: 5;
 }
 
 /* Kelime Kartı Animasyonları */

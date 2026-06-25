@@ -11,7 +11,8 @@ export const views = {
     playing: document.getElementById('view-playing'),
     roundOver: document.getElementById('view-round-over'),
     scoreboard: document.getElementById('view-scoreboard'),
-    gameOver: document.getElementById('view-game-over')
+    gameOver: document.getElementById('view-game-over'),
+    rules: document.getElementById('view-rules')
 };
 
 let currentActiveView = null;
@@ -54,7 +55,7 @@ export function showView(activeView) {
             oldView.classList.remove('transitioning', 'fade-out');
         }
         activeView.classList.remove('transitioning');
-    }, 350);
+    }, 500);
 }
 
 /**

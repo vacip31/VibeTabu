@@ -173,7 +173,7 @@ export function recordDecision(decision) {
     if (decision === 'correct') {
         state.roundScoreChange++;
     } else if (decision === 'tabu') {
-        state.roundScoreChange--;
+        state.roundScoreChange -= 2;
     } else if (decision === 'pass') {
         state.currentPassesUsed++;
     }
@@ -197,14 +197,14 @@ export function updateRoundHistoryDecision(index, newDecision) {
     if (oldDecision === 'correct') {
         state.roundScoreChange--;
     } else if (oldDecision === 'tabu') {
-        state.roundScoreChange++;
+        state.roundScoreChange += 2;
     }
     
     // Yeni kararın etkisini uygula
     if (newDecision === 'correct') {
         state.roundScoreChange++;
     } else if (newDecision === 'tabu') {
-        state.roundScoreChange--;
+        state.roundScoreChange -= 2;
     }
     
     // Kararı güncelle
