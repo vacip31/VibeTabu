@@ -198,9 +198,9 @@ export function updateTimerUI(secondsLeft, totalDuration) {
         svgCircle.style.strokeDashoffset = offset;
         
         if (secondsLeft <= 10) {
-            svgCircle.className = 'text-error transition-all duration-300 ease-linear';
+            svgCircle.setAttribute('class', 'text-error transition-all duration-300 ease-linear');
         } else {
-            svgCircle.className = 'text-primary transition-all duration-1000 ease-linear';
+            svgCircle.setAttribute('class', 'text-primary transition-all duration-1000 ease-linear');
         }
     }
 }
