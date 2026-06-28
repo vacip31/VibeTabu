@@ -369,9 +369,9 @@
 
         <!-- Duraklatma Paneli (Overlay) -->
         <div id="pause-overlay"
-            class="absolute inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex-col items-center justify-center gap-8">
+            class="absolute inset-0 bg-background/80 backdrop-blur-md z-50 hidden flex-col items-center justify-center gap-8">
             <div class="relative flex flex-col items-center justify-center text-center">
-                <div class="absolute w-48 h-48 rounded-full bg-primary/10 blur-3xl opacity-80 animate-pulse-slow"></div>
+                <div class="absolute w-48 h-48 rounded-full bg-primary/15 blur-3xl opacity-80 animate-pulse-slow"></div>
                 <span
                     class="material-symbols-outlined text-[64px] text-primary relative z-10 mb-4 animate-pulse">pause_circle</span>
                 <h2 class="font-display text-3xl text-white font-light tracking-wide relative z-10">Oyun Duraklatıldı
@@ -381,7 +381,7 @@
 
             <div class="flex flex-col gap-4 w-[280px] mt-4 relative z-10">
                 <button id="btn-pause-resume"
-                    class="glass-btn-primary py-4 rounded-full flex items-center justify-center gap-2 text-white font-medium text-base tracking-wider active:scale-95 transition-all">
+                    class="glass-btn-primary py-4 rounded-full flex items-center justify-center gap-2 text-white font-medium text-base tracking-wider active:scale-95 transition-all shadow-[0_4px_15px_rgba(27,153,139,0.15)] hover:bg-primary/10 hover:border-primary/40">
                     <span class="material-symbols-outlined text-sm">play_arrow</span>
                     <span>Devam Et</span>
                 </button>
@@ -395,7 +395,11 @@
     </section>
 
     <!-- 5. GÖRÜNÜM: TUR SONU İNCELEME EKRANI -->
-    <section id="view-round-over" class="game-view flex flex-col w-full h-[100dvh] overflow-hidden bg-black">
+    <section id="view-round-over" class="game-view flex flex-col w-full h-[100dvh] overflow-hidden bg-background">
+        <!-- Atmosferik Arka Plan Işıması -->
+        <div class="glow-bg opacity-80"></div>
+        <div class="ambient-glow opacity-50 animate-pulse-slow"></div>
+
         <header
             class="bg-black/80 backdrop-blur-md absolute top-0 w-full z-50 border-b border-white/5 flex items-center justify-center px-container-padding h-16">
             <h1 class="font-display text-[18px] text-white uppercase tracking-[0.2em] font-light">TUR SONU İNCELEME</h1>
@@ -443,7 +447,7 @@
         <div
             class="absolute bottom-0 w-full px-container-padding py-6 pb-safe-area-bottom bg-gradient-to-t from-black via-black/90 to-transparent z-40 flex justify-center">
             <button id="btn-confirm-review"
-                class="primary-btn w-[280px] py-4 rounded-full flex items-center justify-center gap-2 text-white font-medium tracking-wide active:scale-95 transition-all">
+                class="primary-btn w-[280px] py-4 rounded-full flex items-center justify-center gap-2 text-white font-medium tracking-wide active:scale-95 transition-all shadow-[0_4px_15px_rgba(27,153,139,0.15)] hover:bg-primary/5 hover:border-primary/40">
                 <span>Skorları Onayla</span>
                 <span class="material-symbols-outlined text-primary">done_all</span>
             </button>
@@ -451,7 +455,11 @@
     </section>
 
     <!-- 6. GÖRÜNÜM: SKOR TABLOSU EKRANI -->
-    <section id="view-scoreboard" class="game-view flex flex-col w-full h-[100dvh] overflow-hidden bg-black">
+    <section id="view-scoreboard" class="game-view flex flex-col w-full h-[100dvh] overflow-hidden bg-background">
+        <!-- Atmosferik Arka Plan Işıması -->
+        <div class="glow-bg opacity-80"></div>
+        <div class="ambient-glow opacity-50 animate-pulse-slow"></div>
+
         <header
             class="bg-black/80 backdrop-blur-md absolute top-0 w-full z-50 border-b border-white/5 flex items-center justify-center px-container-padding h-16">
             <h1 class="font-display text-[18px] text-primary uppercase tracking-[0.2em] font-light">SKOR TABLOSU</h1>
@@ -459,11 +467,40 @@
 
         <main
             class="flex-1 pt-20 pb-32 px-container-padding overflow-y-auto w-full max-w-[600px] mx-auto flex flex-col gap-6">
-            <div class="flex flex-col gap-4 mt-6">
-                <h2 class="font-label-caps text-[10px] text-white/40 tracking-wider text-center uppercase">Genel Puan
-                    Durumu</h2>
+            <!-- Genel Puan Durumu Listesi -->
+            <div class="flex flex-col gap-4 mt-4 relative z-10">
+                <h2 class="font-label-caps text-[10px] text-white/40 tracking-wider text-center uppercase">Genel Puan Durumu</h2>
                 <div id="scoreboard-list-container" class="flex flex-col gap-4">
                     <!-- js/ui.js tarafından takımların puanları listelenir -->
+                </div>
+            </div>
+
+            <!-- Yeni Görsel Katmanlar (Boşluğu Doldurmak ve Heyecan Katmak İçin) -->
+            <div class="flex flex-col gap-4 mt-2 relative z-10">
+                <!-- Hedef Skora İlerleme Bölümü -->
+                <div class="glass-panel rounded-2xl p-5 flex flex-col gap-3 shadow-lg">
+                    <div class="flex justify-between items-center text-xs">
+                        <span class="text-white/40 flex items-center gap-1.5">
+                            <span class="material-symbols-outlined text-sm text-secondary">sports_score</span>
+                            Hedef Skor: <span id="scoreboard-target-label" class="text-white font-medium">50</span>
+                        </span>
+                        <span id="scoreboard-leader-dist" class="text-primary text-[10px] md:text-xs font-medium tracking-wide">...</span>
+                    </div>
+                    <!-- İlerleme Çubukları -->
+                    <div id="scoreboard-progress-container" class="flex flex-col gap-3.5 mt-1">
+                        <!-- js/ui.js tarafından dinamik doldurulur -->
+                    </div>
+                </div>
+
+                <!-- Eğlenceli Durum & İpuçları Paneli -->
+                <div class="glass-panel rounded-2xl p-5 flex items-start gap-4 shadow-lg border border-primary/10">
+                    <span class="material-symbols-outlined text-primary text-3xl animate-bounce">campaign</span>
+                    <div class="flex flex-col gap-1 text-left">
+                        <h4 class="font-label-caps text-[10px] text-primary tracking-wider uppercase font-semibold">Günün Durumu / Tavsiye</h4>
+                        <p id="scoreboard-motivational-text" class="font-body text-xs text-white/70 font-light leading-relaxed">
+                            Yükleniyor...
+                        </p>
+                    </div>
                 </div>
             </div>
         </main>
@@ -472,7 +509,7 @@
         <div
             class="absolute bottom-0 w-full px-container-padding py-6 pb-safe-area-bottom bg-gradient-to-t from-black via-black/90 to-transparent z-40 flex justify-center">
             <button id="btn-scoreboard-next"
-                class="primary-btn w-[280px] py-4 rounded-full flex items-center justify-center gap-2 text-white font-medium tracking-wide active:scale-95 transition-all">
+                class="primary-btn w-[280px] py-4 rounded-full flex items-center justify-center gap-2 text-white font-medium tracking-wide active:scale-95 transition-all shadow-[0_4px_15px_rgba(27,153,139,0.15)] hover:bg-primary/5 hover:border-primary/40">
                 <span>Sonraki Tura Geç</span>
                 <span class="material-symbols-outlined text-primary">arrow_forward</span>
             </button>

@@ -1,6 +1,7 @@
 /* VibeTabu Arayüz Güncelleme (DOM) Modülü */
 
 import { playTransition } from './audio.js';
+import { state } from './state.js';
 
 /**
  * Kelime uzunluğuna göre uygun yazı boyutu ve harf aralığı sınıflarını döndürür.
@@ -406,8 +407,10 @@ export function renderRoundReviewCard(container, history, currentIndex, onDecisi
 export function renderScoreboardUI(container, teams, currentRound) {
     container.innerHTML = '';
     
-    // Takımları puana göre sırala (geçici, orijinal sıralama bozulmadan gösterim amaçlı)
+    // Takımları puana göre sırala
     const sortedTeams = [...teams].sort((a, b) => b.score - a.score);
+    const leader = sortedTeams[0];
+    const targetScore = state.targetScore || 50;
     
     sortedTeams.forEach((team, index) => {
         const isLeader = index === 0 && team.score > 0;
@@ -434,6 +437,69 @@ export function renderScoreboardUI(container, teams, currentRound) {
         `;
         container.appendChild(row);
     });
+
+    // 2. Hedef Skor Bilgilerini Güncelle
+    const targetLabel = document.getElementById('scoreboard-target-label');
+    if (targetLabel) targetLabel.textContent = targetScore;
+    
+    const leaderDist = document.getElementById('scoreboard-leader-dist');
+    if (leaderDist) {
+        if (leader.score >= targetScore) {
+            leaderDist.textContent = 'Hedefe Ulaşıldı!';
+        } else {
+            const remaining = targetScore - leader.score;
+            leaderDist.textContent = `${leader.name} Bitime ${remaining} Puan Yakın`;
+        }
+    }
+    
+    // 3. İlerleme Çubuklarını Çiz
+    const progressContainer = document.getElementById('scoreboard-progress-container');
+    if (progressContainer) {
+        progressContainer.innerHTML = '';
+        sortedTeams.forEach((team, index) => {
+            const percentage = Math.max(0, Math.min(100, (team.score / targetScore) * 100));
+            const barColor = index % 2 === 0 ? 'bg-primary' : 'bg-secondary';
+            
+            const progressRow = document.createElement('div');
+            progressRow.className = 'flex flex-col gap-1.5';
+            progressRow.innerHTML = `
+                <div class="flex justify-between items-center text-[10px] tracking-wider text-white/50 uppercase">
+                    <span>${team.name}</span>
+                    <span>%${Math.round(percentage)}</span>
+                </div>
+                <div class="w-full h-2 bg-white/5 rounded-full overflow-hidden border border-white/[0.02]">
+                    <div class="h-full ${barColor} rounded-full animate-width" style="width: ${percentage}%;"></div>
+                </div>
+            `;
+            progressContainer.appendChild(progressRow);
+        });
+    }
+    
+    // 4. Motivasyonel Cümleyi Oluştur
+    const motivationalText = document.getElementById('scoreboard-motivational-text');
+    if (motivationalText) {
+        let message = '⚡ Sıradaki tur oyunun kaderini belirleyebilir. Hazır olun!';
+        
+        if (sortedTeams.length >= 2) {
+            const second = sortedTeams[1];
+            const diff = leader.score - second.score;
+            
+            if (leader.score >= targetScore) {
+                message = `🏆 Tebrikler! ${leader.name} hedef skora ulaştı ve oyunu kazanmaya hak kazandı!`;
+            } else if (targetScore - leader.score <= 5) {
+                message = `🏆 Heyecan dorukta! ${leader.name} şampiyonluğa çok yakın! Kazanmak için sadece ${targetScore - leader.score} puan gerekiyor!`;
+            } else if (diff === 0 && leader.score !== 0) {
+                message = `⚖️ Harika bir denge! ${leader.name} ve ${second.name} eşit puanda başa baş gidiyor. Bu tur dengeleri bozacak!`;
+            } else if (leader.score > 0 && diff <= 3) {
+                message = `🔥 Nefes kesen takip! ${second.name}, lider ${leader.name} takımını sadece ${diff} puan geriden takip ediyor!`;
+            } else if (leader.score < 0) {
+                message = `🥶 Takımların skorları ekside seyrediyor! Toparlanıp artı puanlara geçme zamanı!`;
+            } else {
+                message = `⚡ ${leader.name} şu an lider durumda. Diğer takımların sıradaki turda farkı kapatmak için agresif oynaması gerekiyor!`;
+            }
+        }
+        motivationalText.textContent = message;
+    }
 }
 
 /**

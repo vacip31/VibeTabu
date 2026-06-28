@@ -16054,5 +16054,101 @@
     ],
     "c": "Bilim",
     "d": "O"
+  },
+  {
+    "w": "Hollywood",
+    "f": [
+      "Film",
+      "Sinema",
+      "Amerika",
+      "Şöhret",
+      "Aktör"
+    ],
+    "c": "Sinema",
+    "d": "O"
+  },
+  {
+    "w": "Şener Şen",
+    "f": [
+      "Oyuncu",
+      "Aktör",
+      "Hababam Sınıfı",
+      "Sinema",
+      "Yeşilçam"
+    ],
+    "c": "Sinema",
+    "d": "O"
+  },
+  {
+    "w": "Tiyatro",
+    "f": [
+      "Oyuncu",
+      "Sahne",
+      "Perde",
+      "Oyun",
+      "Suflör"
+    ],
+    "c": "Sinema",
+    "d": "O"
+  },
+  {
+    "w": "Komedi",
+    "f": [
+      "Gülmek",
+      "Film",
+      "Kahkaha",
+      "Şaka",
+      "Eğlenceli"
+    ],
+    "c": "Sinema",
+    "d": "O"
+  },
+  {
+    "w": "Ödül Töreni",
+    "f": [
+      "Kırmızı Halı",
+      "Oscar",
+      "Sanatçı",
+      "Sahne",
+      "Heykelcik"
+    ],
+    "c": "Sinema",
+    "d": "O"
+  },
+  {
+    "w": "Patlamış Mısır",
+    "f": [
+      "Sinema",
+      "Tuzlu",
+      "Kova",
+      "Yemek",
+      "Patlatmak"
+    ],
+    "c": "Sinema",
+    "d": "O"
+  },
+  {
+    "w": "DVD",
+    "f": [
+      "CD",
+      "Player",
+      "Film",
+      "Kalite",
+      "Görüntü"
+    ],
+    "c": "Sinema",
+    "d": "O"
+  },
+  {
+    "w": "Başrol",
+    "f": [
+      "Oyuncu",
+      "Önemli",
+      "Karakter",
+      "Film",
+      "İsim"
+    ],
+    "c": "Sinema",
+    "d": "O"
   }
 ]
