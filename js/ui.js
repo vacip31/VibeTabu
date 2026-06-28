@@ -147,17 +147,17 @@ export function renderActiveCard(card, passesUsed, passLimit) {
     
     // Kart içeriğini güncelle
     cardContainer.innerHTML = `
-        <h1 class="font-display ${titleClass} text-white uppercase mb-6 text-center select-none">
+        <h1 class="font-display ${titleClass} text-white uppercase mb-6 text-center select-none target-word">
             ${card.w}
         </h1>
         <div class="w-2/3 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent mb-6"></div>
         <div class="flex flex-col items-center space-y-[12px] w-full select-none">
-            <span class="font-label-caps text-label-caps text-outline uppercase tracking-widest mb-1">TABU KELİMELER</span>
-            <div class="w-full flex flex-col items-center space-y-[10px]">
-                ${card.f.map((word, i) => `
-                    <span class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface-variant font-light tracking-wide w-full text-center ${i < 4 ? 'pb-2 border-b border-white/5' : ''}">
+            <span class="font-label-caps text-label-caps text-outline uppercase tracking-widest mb-2">TABU KELİMELER</span>
+            <div class="w-full flex flex-col items-center space-y-[8px]">
+                ${card.f.map((word) => `
+                    <div class="w-full py-3 px-4 rounded-2xl bg-white/[0.02] border border-white/[0.04] text-on-surface-variant font-light tracking-wide text-center text-base md:text-lg shadow-sm">
                         ${word}
-                    </span>
+                    </div>
                 `).join('')}
             </div>
         </div>
@@ -319,21 +319,21 @@ export function renderRoundReviewCard(container, history, currentIndex, onDecisi
     
     // Karar durum renkleri ve buton sınıfları
     const btnTabuClass = item.result === 'tabu' 
-        ? 'border-error bg-error/15 text-error shadow-[0_0_15px_rgba(248,113,113,0.3)]' 
-        : 'border-white/10 text-white/40 hover:text-white hover:border-white/20';
+        ? 'border-error bg-error/15 text-error shadow-[0_0_15px_rgba(237,33,124,0.3)]' 
+        : 'border-error/20 text-error/40 hover:text-error hover:border-error/40';
         
     const btnPassClass = item.result === 'pass' 
-        ? 'border-white bg-white/10 text-white shadow-[0_0_15px_rgba(255,255,255,0.2)]' 
-        : 'border-white/10 text-white/40 hover:text-white hover:border-white/20';
+        ? 'border-secondary bg-secondary/15 text-secondary shadow-[0_0_15px_rgba(255,155,113,0.3)]' 
+        : 'border-secondary/20 text-secondary/40 hover:text-secondary hover:border-secondary/40';
         
     const btnCorrectClass = item.result === 'correct' 
-        ? 'border-primary bg-primary/15 text-primary shadow-[0_0_15px_rgba(184,196,255,0.3)]' 
-        : 'border-white/10 text-white/40 hover:text-white hover:border-white/20';
+        ? 'border-primary bg-primary/15 text-primary shadow-[0_0_15px_rgba(27,153,139,0.3)]' 
+        : 'border-primary/20 text-primary/40 hover:text-primary hover:border-primary/40';
 
     const titleClass = getWordFontSizeClass(item.word, true);
 
     cardDiv.innerHTML = `
-        <h1 class="font-display ${titleClass} text-white uppercase mb-4 text-center select-none font-medium">
+        <h1 class="font-display ${titleClass} text-white uppercase mb-4 text-center select-none font-medium target-word">
             ${item.word}
         </h1>
         <div class="w-2/3 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent mb-4"></div>
@@ -341,10 +341,10 @@ export function renderRoundReviewCard(container, history, currentIndex, onDecisi
         <div class="flex flex-col items-center space-y-[4px] w-full select-none mb-4">
             <span class="font-label-caps text-[10px] text-white/40 tracking-wider mb-2">YASAKLI KELİMELER</span>
             <div class="w-full flex flex-col items-center space-y-[3px]">
-                ${item.forbidden.map((word, i) => `
-                    <span class="font-body text-base text-on-surface-variant font-light tracking-wide w-full text-center ${i < 4 ? 'pb-1 border-b border-white/5' : ''}">
+                ${item.forbidden.map((word) => `
+                    <div class="w-full py-2 px-4 rounded-xl bg-white/[0.02] border border-white/[0.04] text-on-surface-variant font-light tracking-wide text-center text-sm md:text-base">
                         ${word}
-                    </span>
+                    </div>
                 `).join('')}
             </div>
         </div>

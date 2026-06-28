@@ -14386,5 +14386,197 @@
     ],
     "c": "Sokak Ağzı",
     "d": "O"
+  },
+  {
+    "w": "Amme Hizmeti",
+    "f": [
+      "Bedava İş",
+      "Hayır",
+      "Karşılıksız",
+      "Toplum",
+      "Yarar"
+    ],
+    "c": "Sokak Ağzı",
+    "d": "Z"
+  },
+  {
+    "w": "Zırvana",
+    "f": [
+      "Saçmalığın Zirvesi",
+      "Saçmalamak",
+      "Nirvana",
+      "Deli",
+      "Konuşma"
+    ],
+    "c": "Sokak Ağzı",
+    "d": "Z"
+  },
+  {
+    "w": "Sazan Sarmalı",
+    "f": [
+      "Dolandırıcılık",
+      "Karmaşık Oyun",
+      "Tuzak",
+      "Aldatmak",
+      "Kurban"
+    ],
+    "c": "Sokak Ağzı",
+    "d": "Z"
+  },
+  {
+    "w": "Raconu Bozmak",
+    "f": [
+      "Kurallara Uymamak",
+      "Yanlış Yapmak",
+      "Aykırı",
+      "Mahalle",
+      "Saygısızlık"
+    ],
+    "c": "Sokak Ağzı",
+    "d": "Z"
+  },
+  {
+    "w": "Şamar Oğlanı",
+    "f": [
+      "Herkesin Vurduğu",
+      "Ezilen",
+      "Sıkça Kızılan",
+      "Kurban",
+      "Zayıf"
+    ],
+    "c": "Sokak Ağzı",
+    "d": "Z"
+  },
+  {
+    "w": "Yavru Vatan",
+    "f": [
+      "Kıbrıs",
+      "KKTC",
+      "Ülke",
+      "Ada",
+      "Akdeniz"
+    ],
+    "c": "Sokak Ağzı",
+    "d": "Z"
+  },
+  {
+    "w": "Tuzak Kurmak",
+    "f": [
+      "Kötü Plan",
+      "Komplo",
+      "Arkasından",
+      "Zarar Vermek",
+      "Açıklamak"
+    ],
+    "c": "Sokak Ağzı",
+    "d": "Z"
+  },
+  {
+    "w": "Aşırı Cimri",
+    "f": [
+      "Eli Sıkı",
+      "Para",
+      "Hesap",
+      "Tutumlu",
+      "Açıklamak"
+    ],
+    "c": "Sokak Ağzı",
+    "d": "Z"
+  },
+  {
+    "w": "Nal Toplamak",
+    "f": [
+      "Çok Geride Kalmak",
+      "Başarısız",
+      "Yarış",
+      "Kaybetmek",
+      "Sonuncu"
+    ],
+    "c": "Sokak Ağzı",
+    "d": "Z"
+  },
+  {
+    "w": "Bahane Bulmak",
+    "f": [
+      "Ertelemek",
+      "İş Yapmamak",
+      "Kaçınmak",
+      "Zorlaştırmak",
+      "Açıklamak"
+    ],
+    "c": "Sokak Ağzı",
+    "d": "Z"
+  },
+  {
+    "w": "Bal Çalmak",
+    "f": [
+      "Geçici Memnuniyet",
+      "Kandırmak",
+      "Oyalama",
+      "Söz",
+      "İyilik"
+    ],
+    "c": "Sokak Ağzı",
+    "d": "Z"
+  },
+  {
+    "w": "Abayı Yakmak",
+    "f": [
+      "Aşık Olmak",
+      "Sevmek",
+      "Sevgili",
+      "Tutku",
+      "Gönül"
+    ],
+    "c": "Sokak Ağzı",
+    "d": "Z"
+  },
+  {
+    "w": "Mutlu Olmak",
+    "f": [
+      "Çok Sevinmek",
+      "Gülmek",
+      "Müjde",
+      "Haber",
+      "Açıklamak"
+    ],
+    "c": "Sokak Ağzı",
+    "d": "Z"
+  },
+  {
+    "w": "Sırrı Açıklamak",
+    "f": [
+      "Sonunda",
+      "Gizli",
+      "İtiraf",
+      "Tahmin",
+      "Anlatmak"
+    ],
+    "c": "Sokak Ağzı",
+    "d": "Z"
+  },
+  {
+    "w": "Yolunu Gözlemek",
+    "f": [
+      "Hasretle Beklemek",
+      "Özlemek",
+      "Gelmek",
+      "Hasret",
+      "Açıklamak"
+    ],
+    "c": "Sokak Ağzı",
+    "d": "Z"
+  },
+  {
+    "w": "Götü Kalkmak",
+    "f": [
+      "Şımarmak",
+      "Havalanmak",
+      "Kibir",
+      "Kendini Beğenmiş",
+      "Değişmek"
+    ],
+    "c": "Sokak Ağzı",
+    "d": "Z"
   }
 ]
