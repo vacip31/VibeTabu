@@ -414,20 +414,26 @@ export function renderScoreboardUI(container, teams, currentRound) {
     
     sortedTeams.forEach((team, index) => {
         const isLeader = index === 0 && team.score > 0;
-        const cardClass = isLeader ? 'glass-card border-primary/30' : 'glass-card border-white/5';
+        const cardClass = isLeader 
+            ? 'bg-primary/5 border-primary/20 shadow-[0_0_15px_rgba(27,153,139,0.08)]' 
+            : 'bg-white/[0.02] border-white/5 shadow-sm';
+            
+        const badgeClass = isLeader
+            ? 'border-primary/20 bg-primary/10 text-primary font-semibold'
+            : 'border-white/10 bg-white/5 text-white/50';
         
         const row = document.createElement('div');
-        row.className = `rounded-xl p-5 flex items-center justify-between relative overflow-hidden transition-all ${cardClass}`;
+        row.className = `rounded-xl p-5 flex items-center justify-between relative overflow-hidden transition-all border ${cardClass}`;
         
         row.innerHTML = `
             ${isLeader ? `<div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>` : ''}
             <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-full flex items-center justify-center border border-white/10 bg-white/5 font-label-caps text-xs">
+                <div class="w-8 h-8 rounded-full flex items-center justify-center ${badgeClass} font-label-caps text-xs">
                     #${index + 1}
                 </div>
                 <div class="flex flex-col">
                     <span class="font-body-lg font-light text-white">${team.name}</span>
-                    <span class="text-[10px] tracking-wider text-white/30 uppercase mt-0.5">D: ${team.corrects} | T: ${team.tabus} | P: ${team.passes}</span>
+                    <span class="text-[9px] tracking-wider text-white/40 uppercase mt-1 font-medium">Doğru: <span class="text-white/70">${team.corrects}</span> | Tabu: <span class="text-white/70">${team.tabus}</span> | Pas: <span class="text-white/70">${team.passes}</span></span>
                 </div>
             </div>
             <div class="flex items-center gap-2">
