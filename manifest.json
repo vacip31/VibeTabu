@@ -65,18 +65,46 @@
   ],
   "screenshots": [
     {
-      "src": "screenshot-1.png",
-      "sizes": "2560x1305",
+      "src": "screenshot-mobile-1.png",
+      "sizes": "390x844",
       "type": "image/png",
-      "form_factor": "wide",
-      "label": "Giriş ve Ayarlar Ekranı"
+      "form_factor": "narrow",
+      "label": "Giriş Ekranı (Mobil)"
     },
     {
-      "src": "screenshot-2.png",
-      "sizes": "2560x1305",
+      "src": "screenshot-mobile-2.png",
+      "sizes": "390x844",
       "type": "image/png",
-      "form_factor": "wide",
-      "label": "Kurallar ve Oynanış Rehberi"
+      "form_factor": "narrow",
+      "label": "Ayarlar ve Takım Yönetimi (Mobil)"
+    },
+    {
+      "src": "screenshot-mobile-3.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Kategori Seçimi (Mobil)"
+    },
+    {
+      "src": "screenshot-mobile-4.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Aktif Kart Anlatım Ekranı (Mobil)"
+    },
+    {
+      "src": "screenshot-mobile-5.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Karar Düzeltme & İnceleme (Mobil)"
+    },
+    {
+      "src": "screenshot-mobile-6.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Skor Tablosu & Hedef Takibi (Mobil)"
     }
   ]
 }
