@@ -1,4 +1,4 @@
-/* VibeTabu Web Audio API Ses Sentez Modülü */
+/* VibeTabu Web Audio API Ses Sentez ve Dokunsal Geri Bildirim Modülü */
 
 let audioCtx = null;
 
@@ -28,9 +28,24 @@ export function initAudio() {
 }
 
 /**
+ * Mobil cihazlarda titreşim (Haptic Feedback) tetikler.
+ * @param {number|number[]} pattern Titreşim deseni (milisaniye cinsinden)
+ */
+export function playVibration(pattern) {
+    if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+        try {
+            navigator.vibrate(pattern);
+        } catch (e) {
+            console.warn("Titreşim tetiklenemedi:", e);
+        }
+    }
+}
+
+/**
  * Doğru cevap sesi: İki hızlı yükselen sinüs dalgası (C5 -> E5).
  */
 export function playCorrect() {
+    playVibration(60);
     try {
         const ctx = getAudioContext();
         const now = ctx.currentTime;
@@ -59,6 +74,7 @@ export function playCorrect() {
  * Tabu cevap sesi: Kalın ve kirli testere dişi dalgası (140Hz).
  */
 export function playTabu() {
+    playVibration([120, 80, 120]);
     try {
         const ctx = getAudioContext();
         const now = ctx.currentTime;
@@ -83,9 +99,39 @@ export function playTabu() {
 }
 
 /**
+ * Pas geçme sesi: Hızlı ve hafif sönen bir sinüs dalgası (400Hz -> 200Hz).
+ */
+export function playPass() {
+    playVibration(80);
+    try {
+        const ctx = getAudioContext();
+        const now = ctx.currentTime;
+        
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(400, now);
+        osc.frequency.exponentialRampToValueAtTime(200, now + 0.1);
+        
+        gain.gain.setValueAtTime(0.08, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+        
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        
+        osc.start(now);
+        osc.stop(now + 0.1);
+    } catch (e) {
+        console.warn("Ses çalma hatası:", e);
+    }
+}
+
+/**
  * Süre bitimi alarm sesi: Çift frekanslı üçgen dalga uyarısı.
  */
 export function playTimeOver() {
+    playVibration([200, 100, 200, 100, 300]);
     try {
         const ctx = getAudioContext();
         const now = ctx.currentTime;
@@ -114,6 +160,7 @@ export function playTimeOver() {
  * Sayfa geçiş sesi: Yumuşak ve fütüristik yükselen bir sinüs kayması (sweeping sine).
  */
 export function playTransition() {
+    playVibration(15);
     try {
         const ctx = getAudioContext();
         const now = ctx.currentTime;

@@ -33,13 +33,17 @@ import {
     playCorrect, 
     playTabu, 
     playTimeOver,
-    playTransition
+    playTransition,
+    playPass,
+    playVibration
 } from './audio.js';
 
 // Global Oyun Değişkenleri
 let allWords = [];
 let activeTeamsCount = 2; // Başlangıçta 2 takım
 let roundInterval = null;
+let reviewCountdownInterval = null;
+let reviewCountdownTime = 0;
 
 // Sayfa yüklendiğinde başlat
 window.addEventListener('DOMContentLoaded', () => {
@@ -104,6 +108,19 @@ function initSetupScreen() {
 function setupEventListeners() {
     // Mobil tıklama gecikmesini gidermek için touch/pointer olayları kullanımı
     const clickEvent = 'pointerdown';
+    
+    // Genel dokunsal geri bildirim (Haptic Feedback) olay dinleyicisi
+    document.addEventListener(clickEvent, (e) => {
+        const button = e.target.closest('button, .option-pill, [role="button"]');
+        if (button) {
+            // Aktif oyun butonları (Doğru, Tabu, Pas) kendi özel titreşimlerini çalacağı için
+            // genel tıklama titreşimini onlar için tetiklemiyoruz.
+            const id = button.id;
+            if (id !== 'btn-correct' && id !== 'btn-tabu' && id !== 'btn-pass') {
+                playVibration(15);
+            }
+        }
+    }, { passive: true });
     
     // --- BAŞLANGIÇ EKRANI (SPLASH) OLAYLARI ---
     const btnSplashStart = document.getElementById('btn-splash-start');
@@ -352,6 +369,10 @@ function setupEventListeners() {
                 clearInterval(roundInterval);
                 roundInterval = null;
             }
+            if (reviewCountdownInterval) {
+                clearInterval(reviewCountdownInterval);
+                reviewCountdownInterval = null;
+            }
             const pauseOverlay = document.getElementById('pause-overlay');
             if (pauseOverlay) {
                 pauseOverlay.classList.add('hidden');
@@ -453,6 +474,14 @@ function setupEventListeners() {
     if (btnConfirmReview) {
         btnConfirmReview.addEventListener(clickEvent, (e) => {
             e.preventDefault();
+            
+            // Sayaç devam ediyorsa onaylamaya izin verme
+            if (reviewCountdownTime > 0) return;
+            
+            if (reviewCountdownInterval) {
+                clearInterval(reviewCountdownInterval);
+                reviewCountdownInterval = null;
+            }
             
             // Skorları onayla ve sonraki ekrana geç
             confirmRoundScores();
@@ -598,9 +627,10 @@ function handleCardAction(decision) {
         return;
     }
     
-    // Ses efektini çal
+    // Ses ve titreşim efektini çal
     if (decision === 'correct') playCorrect();
     else if (decision === 'tabu') playTabu();
+    else if (decision === 'pass') playPass();
     
     // Ekran parlama efekti
     triggerFlashOverlay(decision);
@@ -680,6 +710,62 @@ function endRound() {
     
     // Tur sonu inceleme ekranını kur
     setupRoundOverView();
+    
+    // 5 saniyelik onay kilidini başlat
+    startReviewCountdown();
+}
+
+/**
+ * Tur sonu skorları onayla butonu için 5 saniyelik geri sayım sayacını başlatır.
+ */
+function startReviewCountdown() {
+    const btnConfirm = document.getElementById('btn-confirm-review');
+    if (!btnConfirm) return;
+
+    reviewCountdownTime = 5;
+    
+    // Butonu pasifleştir ve stilini ayarla
+    btnConfirm.disabled = true;
+    btnConfirm.classList.add('opacity-50', 'cursor-not-allowed');
+    btnConfirm.classList.remove('active:scale-95');
+    
+    const spanText = btnConfirm.querySelector('span:first-child');
+    const icon = btnConfirm.querySelector('.material-symbols-outlined');
+    if (spanText) {
+        spanText.textContent = `Skorları Onayla (${reviewCountdownTime}s)`;
+    }
+    if (icon) {
+        icon.textContent = 'hourglass_empty'; // Kum saati ikonu
+        icon.classList.add('animate-spin'); // İkon dönsün
+    }
+
+    if (reviewCountdownInterval) clearInterval(reviewCountdownInterval);
+    
+    reviewCountdownInterval = setInterval(() => {
+        reviewCountdownTime--;
+        
+        if (spanText) {
+            spanText.textContent = `Skorları Onayla (${reviewCountdownTime}s)`;
+        }
+        
+        if (reviewCountdownTime <= 0) {
+            clearInterval(reviewCountdownInterval);
+            reviewCountdownInterval = null;
+            
+            // Butonu tekrar aktif et
+            btnConfirm.disabled = false;
+            btnConfirm.classList.remove('opacity-50', 'cursor-not-allowed');
+            btnConfirm.classList.add('active:scale-95');
+            
+            if (spanText) {
+                spanText.textContent = 'Skorları Onayla';
+            }
+            if (icon) {
+                icon.textContent = 'done_all'; // Orijinal onay işareti ikonu
+                icon.classList.remove('animate-spin');
+            }
+        }
+    }, 1000);
 }
 
 /**

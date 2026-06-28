@@ -2,6 +2,31 @@
 
 import { playTransition } from './audio.js';
 
+/**
+ * Kelime uzunluğuna göre uygun yazı boyutu ve harf aralığı sınıflarını döndürür.
+ * Çok uzun kelimelerin taşmasını veya kenarlarda kesilmesini engeller.
+ */
+function getWordFontSizeClass(word, isReview = false) {
+    const len = word ? word.length : 0;
+    if (isReview) {
+        if (len <= 8) {
+            return 'text-[30px] md:text-[36px] tracking-wide';
+        } else if (len <= 12) {
+            return 'text-[24px] md:text-[30px] tracking-normal';
+        } else {
+            return 'text-[18px] md:text-[22px] tracking-tight break-words';
+        }
+    } else {
+        if (len <= 8) {
+            return 'text-[42px] md:text-[56px] tracking-wider';
+        } else if (len <= 12) {
+            return 'text-[32px] md:text-[44px] tracking-wide';
+        } else {
+            return 'text-[24px] md:text-[32px] tracking-normal break-words';
+        }
+    }
+}
+
 // Görünüm elementlerinin referansları
 export const views = {
     splash: document.getElementById('view-splash'),
@@ -118,9 +143,11 @@ export function renderActiveCard(card, passesUsed, passLimit) {
     const cardContainer = document.getElementById('active-card-container');
     if (!cardContainer || !card) return;
     
+    const titleClass = getWordFontSizeClass(card.w, false);
+    
     // Kart içeriğini güncelle
     cardContainer.innerHTML = `
-        <h1 class="font-display text-[42px] md:text-[56px] text-white tracking-widest uppercase mb-6 text-center select-none">
+        <h1 class="font-display ${titleClass} text-white uppercase mb-6 text-center select-none">
             ${card.w}
         </h1>
         <div class="w-2/3 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent mb-6"></div>
@@ -288,7 +315,7 @@ export function renderRoundReviewCard(container, history, currentIndex, onDecisi
     
     // Kart HTML yapısı (Siber minimalist tabu kartı şeklinde)
     const cardDiv = document.createElement('div');
-    cardDiv.className = 'card-container w-full liquid-glass rounded-3xl p-8 flex flex-col items-center justify-center inner-glow relative overflow-hidden';
+    cardDiv.className = 'card-container w-full liquid-glass rounded-3xl py-5 px-6 flex flex-col items-center justify-center inner-glow relative overflow-hidden';
     
     // Karar durum renkleri ve buton sınıfları
     const btnTabuClass = item.result === 'tabu' 
@@ -303,17 +330,19 @@ export function renderRoundReviewCard(container, history, currentIndex, onDecisi
         ? 'border-primary bg-primary/15 text-primary shadow-[0_0_15px_rgba(184,196,255,0.3)]' 
         : 'border-white/10 text-white/40 hover:text-white hover:border-white/20';
 
+    const titleClass = getWordFontSizeClass(item.word, true);
+
     cardDiv.innerHTML = `
-        <h1 class="font-display text-[32px] md:text-[40px] text-white tracking-widest uppercase mb-4 text-center select-none font-medium">
+        <h1 class="font-display ${titleClass} text-white uppercase mb-4 text-center select-none font-medium">
             ${item.word}
         </h1>
         <div class="w-2/3 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent mb-4"></div>
         
-        <div class="flex flex-col items-center space-y-[8px] w-full select-none mb-6">
+        <div class="flex flex-col items-center space-y-[4px] w-full select-none mb-4">
             <span class="font-label-caps text-[10px] text-white/40 tracking-wider mb-2">YASAKLI KELİMELER</span>
-            <div class="w-full flex flex-col items-center space-y-[6px]">
+            <div class="w-full flex flex-col items-center space-y-[3px]">
                 ${item.forbidden.map((word, i) => `
-                    <span class="font-body text-base text-on-surface-variant font-light tracking-wide w-full text-center ${i < 4 ? 'pb-2 border-b border-white/5' : ''}">
+                    <span class="font-body text-base text-on-surface-variant font-light tracking-wide w-full text-center ${i < 4 ? 'pb-1 border-b border-white/5' : ''}">
                         ${word}
                     </span>
                 `).join('')}
