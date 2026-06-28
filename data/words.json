@@ -633,7 +633,7 @@
       "Yaratıcı"
     ],
     "c": "Felsefe",
-    "d": "K"
+    "d": "O"
   },
   {
     "w": "Ateizm",
@@ -645,7 +645,7 @@
       "Teizm"
     ],
     "c": "Felsefe",
-    "d": "K"
+    "d": "O"
   },
   {
     "w": "Agnostisizm",
@@ -681,7 +681,7 @@
       "Başkaldırı"
     ],
     "c": "Felsefe",
-    "d": "K"
+    "d": "O"
   },
   {
     "w": "Sosyalizm",
@@ -693,7 +693,7 @@
       "Ortak"
     ],
     "c": "Felsefe",
-    "d": "K"
+    "d": "O"
   },
   {
     "w": "Kapitalizm",
@@ -705,7 +705,7 @@
       "Sınıf"
     ],
     "c": "Felsefe",
-    "d": "K"
+    "d": "O"
   },
   {
     "w": "Faşizm",
@@ -717,7 +717,7 @@
       "Baskı"
     ],
     "c": "Felsefe",
-    "d": "K"
+    "d": "O"
   },
   {
     "w": "Liberalizm",
@@ -729,7 +729,7 @@
       "Serbest"
     ],
     "c": "Felsefe",
-    "d": "K"
+    "d": "O"
   },
   {
     "w": "Kozmopolitizm",
@@ -753,7 +753,7 @@
       "Aktivizm"
     ],
     "c": "Felsefe",
-    "d": "K"
+    "d": "O"
   },
   {
     "w": "Diplomasi",
@@ -765,7 +765,7 @@
       "Müzakere"
     ],
     "c": "Günlük Hayat",
-    "d": "K"
+    "d": "O"
   },
   {
     "w": "Jeopolitik",
@@ -3873,7 +3873,7 @@
       "Duygu"
     ],
     "c": "Genel",
-    "d": "Z"
+    "d": "O"
   },
   {
     "w": "Özgüven",
@@ -5433,7 +5433,7 @@
       "Üzüntü"
     ],
     "c": "Felsefe",
-    "d": "Z"
+    "d": "O"
   },
   {
     "w": "Bahse Girmek",
@@ -5757,7 +5757,7 @@
       "Durum"
     ],
     "c": "Genel",
-    "d": "Z"
+    "d": "O"
   },
   {
     "w": "Tedirginlik",
@@ -5829,7 +5829,7 @@
       "Uymayan"
     ],
     "c": "Genel",
-    "d": "Z"
+    "d": "O"
   },
   {
     "w": "Çaresizlik",
@@ -7473,7 +7473,7 @@
       "Başlamak"
     ],
     "c": "Günlük Hayat",
-    "d": "Z"
+    "d": "O"
   },
   {
     "w": "Eli Açık",
@@ -9225,7 +9225,7 @@
       "Şüphe"
     ],
     "c": "Genel",
-    "d": "Z"
+    "d": "O"
   },
   {
     "w": "Göze Gelmek",
@@ -11121,7 +11121,7 @@
       "Tek Kelime"
     ],
     "c": "Genel",
-    "d": "Z"
+    "d": "O"
   },
   {
     "w": "Kandırmak",
@@ -14337,7 +14337,7 @@
       "Açıklamak"
     ],
     "c": "Sokak Ağzı",
-    "d": "Z"
+    "d": "O"
   },
   {
     "w": "Aşırı Cimri",
