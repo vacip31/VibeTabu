@@ -1,6 +1,6 @@
 /* VibeTabu PWA Service Worker (sw.js) */
 
-const CACHE_NAME = 'vibetabu-cache-v64';
+const CACHE_NAME = 'vibetabu-cache-v65';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
@@ -12,10 +12,7 @@ const ASSETS_TO_CACHE = [
     './data/words.json',
     './manifest.json',
     './icon-192.png',
-    './icon-512.png',
-    'https://cdn.tailwindcss.com?plugins=forms,container-queries',
-    'https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap',
-    'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap'
+    './icon-512.png'
 ];
 
 // Service Worker Kurulumu ve Önbellekleme
