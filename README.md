@@ -1,50 +1,93 @@
-# VibeTabu - Sadede Gel! 🎯
+# 🌌 VibeParty — Mobil Parti Oyunları Portalı
 
-VibeTabu, modern tasarımı, akıcı oynanışı ve yenilikçi mekanikleriyle klasik Tabu oyununu arkadaş grupları için dijital bir şölene dönüştüren, PWA (Progressive Web App) destekli, tamamen çevrimdışı çalışan bir mobil/web parti oyunudur.
+<div align="center">
+  <img src="./icon-192.png" width="96" height="96" alt="VibeParty Logo" style="border-radius: 24px; box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);" />
+  
+  <h3>Parti Gecelerinizi Dijital Şölene Dönüştürün 🎮✨</h3>
 
-Fütüristik derin lacivert teması, buzlu cam (glassmorphism) panelleri ve neon ışımalarıyla tasarlanan VibeTabu, hem göze hitap eder hem de sunduğu taktiksel oynanışla partilerinizin vazgeçilmezi olur.
+  <p align="center">
+    <img src="https://img.shields.io/badge/PWA-Supported-6366f1?style=for-the-badge&logo=pwa&logoColor=white" alt="PWA Support" />
+    <img src="https://img.shields.io/badge/Offline-First-059669?style=for-the-badge&logo=offline&logoColor=white" alt="Offline First" />
+    <img src="https://img.shields.io/badge/UI/UX-Cyberpunk_Neon-ec4899?style=for-the-badge" alt="Cyberpunk Theme" />
+    <img src="https://img.shields.io/badge/JavaScript-ES6+-f59e0b?style=for-the-badge&logo=javascript&logoColor=black" alt="JS Version" />
+  </p>
+</div>
 
 ---
 
-## ✨ Öne Çıkan Özellikler
+VibeParty, modern tasarımları, akıcı kullanıcı deneyimleri ve yenivelikçi mekanikleriyle klasik parti oyunlarını arkadaş grupları için dijital bir şölene dönüştüren, **PWA (Progressive Web App)** destekli, tamamen çevrimdışı (offline-first) çalışan bir mobil parti oyunları portalıdır.
 
-*   **🌌 Obsidian Glass & Neon Tasarım Arayüzü:** Flat tasarımlardan uzak, neon geçişleri, siber parlama efektleri, iOS tarzı buzlu cam arka planlar (`backdrop-blur`) ve görsel şölen sunan akıcı animasyonlar.
-*   **💾 Kaldığın Yerden Devam Et (Auto-Save):** Şarjınız bitse, internetiniz kesilse veya sekme kazara yenilense bile oyun kaldığı yerden aynen devam eder! Oyun oynanırken cihaz kapanırsa, hak kaybı olmaması için sistem otomatik olarak o turun aktif anlatıcı ekranından geri yüklenir.
-*   **🎰 Bonus Puan İddiası:** Her tur başlamadan önce takımlar hedef doğru sayısı belirleyerek iddiaya girebilir (Örn: *"Bu tur en az 5 doğru yapabilir miyim?"*). Hedefe ulaşılırsa +1 bonus puan kazanılır, ulaşılamazsa -1 ceza puanı düşülür.
-*   **📈 Canlı İlerleme & Skor Takibi:** Skor tablosunda takımların hedef skora olan mesafesini gösteren dinamik ilerleme barları, lider ile aradaki farkı gösteren istatistikler ve tur içi aktif doğru geri sayım rozetleri.
-*   **📱 PWA & Çevrimdışı Desteği:** İnternet bağlantınız olmasa dahi oyunu tamamen yerel bir mobil uygulama gibi sıfır gecikmeyle oynayabilirsiniz.
-*   **📳 Haptik Geri Bildirim:** Doğru, Tabu veya Pas butonlarına tıklandığında cihazınızda gerçekçi ve tatmin edici titreşim efektleri tetiklenir.
-*   **🛡️ Çift Tıklama Koruması:** Tur sonlarında skorları onaylarken peş peşe yapılan hızlı tıklamaların skoru mükerrer eklemesini önleyen durum güvenlik kilitleri.
-*   **🔍 Akıllı Kelime Taşma Koruması:** Çok uzun kelimelerin kart sınırlarından taşmasını veya kesilmesini önlemek amacıyla, kelime uzunluğuna göre dinamik yazı boyutu ayarlama sistemi.
+Cihazı elden ele gezdirerek, herhangi bir fiziksel kart veya kaleme ihtiyaç duymadan, **Obsidian Glass & Neon** tasarımlı harika bir mobil uygulama arayüzüyle arkadaşlarınızla keyifli vakit geçirebilirsiniz.
+
+---
+
+## 🎮 Portal İçindeki Oyunlar
+
+<table width="100%">
+  <tr>
+    <td width="50%" align="center">
+      <h3>🎯 VibeTabu</h3>
+      <p><b>Yasak Kelimeler Oyunu</b></p>
+      <p>Klasik Tabu heyecanını siber-neon tema ve modern iddia mekanikleriyle birleştiren takımsal mücadele.</p>
+    </td>
+    <td width="50%" align="center">
+      <h3>🖋️ Vibe X Verses</h3>
+      <p><b>İpucu Zinciri & Casus Oyunu</b></p>
+      <p>Gizli kelimeyi açık etmeden ipucu zinciri oluştururken, ekibin arasına sızmış olan Casusu bulma veya Casus olarak hayatta kalma mücadelesi.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <ul>
+        <li><b>🎯 Bonus Puan İddiası:</b> Her tur başında hedef doğru sayısı belirleyerek iddiaya girin (En az +5 doğru yapabilir miyim?).</li>
+        <li><b>📊 Canlı İlerleme Takibi:</b> Hedefe mesafeyi gösteren animasyonlu neon barlar.</li>
+        <li><b>🛡️ Çift Tıklama Koruması:</b> Hızlı onaylamalarda puanların mükerrer eklenmesini önleyen durum kilitleri.</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li><b>👥 Çift Casus Modu:</b> 6 oyuncu ve üzeri için iki casusun da birbirinden habersiz sızdığı paranoid mod.</li>
+        <li><b>⏳ Dinamik Kum Saati:</b> 45 veya 90 saniyelik daktilo efektli geri sayım cihazı.</li>
+        <li><b>🧠 Esnek Sinonim (Fuzzy Match):</b> Casus tahmin ederken kelimenin eş anlamlılarını ve çağrışımlarını (Örn: <code>Deadline</code> yerine <code>zaman</code> veya <code>is</code>) algılayan sistem.</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+
+---
+
+## ✨ Ortak Teknik Mekanikler
+
+*   **💾 Kaldığın Yerden Devam Et (Auto-Save & Resume):** Şarjınız bitse, sayfa kazara yenilense veya tarayıcı kapansa bile portal oyun durumunu her adımda `localStorage` üzerine kaydeder. Giriş ekranlarında beliren **"Oyuna Devam Et"** butonuyla saniyeler içinde kaldığınız yerden devam edebilirsiniz.
+*   **🔄 SPA Cihaz Geri Tuşu Entegrasyonu:** Android geri jesti veya tarayıcı geri okuna tıklandığında oyunun tamamen kapanması engellenir. HTML5 History API sayesinde oyun içi görünümler arasında geri gidilir.
+*   **📱 PWA Desteği & Çevrimdışı Çalışma:** Servis işçisi (Service Worker) entegrasyonu sayesinde portal bir kez açıldıktan sonra internet bağlantınız olmasa bile sıfır gecikmeyle çalışır.
+*   **📳 Haptik Titreşim Geri Bildirimi:** Önemli buton tıklamalarında ve doğru tahminlerde mobil cihazınızda titreşim tetiklenir.
 
 ---
 
 ## 📱 Mobil Cihaza Ekleme Rehberi (PWA Kurulumu)
 
-VibeTabu'yu telefonunuza kurarak tarayıcı çubuklarından arınmış tam ekran modunda ve **internetsiz (çevrimdışı)** oynamak için aşağıdaki adımları takip edin:
+VibeParty portalını telefonunuza kurarak tarayıcı çubuklarından arınmış tam ekran modunda ve **internetsiz (çevrimdışı)** oynamak için aşağıdaki adımları takip edin:
 
 ### 🍏 iOS (iPhone & iPad - Safari)
-1.  Telefonunuzdan **Safari** tarayıcısını açın ve oyun adresine gidin.
-2.  Ekranın alt kısmındaki **Paylaş (Share)** butonuna (yukarı yönlü ok içeren kare simgesi) dokunun.
-3.  Açılan menüyü aşağı kaydırıp **Ana Ekrana Ekle (Add to Home Screen)** seçeneğini seçin.
-4.  Uygulama adına "VibeTabu" yazarak sağ üstteki **Ekle (Add)** butonuna dokunun.
-5.  Oyun, uygulama ikonunuz olarak ana ekranınıza eklenecektir. Dokunarak tam ekran oynayabilirsiniz!
+1.  Safari tarayıcısından portal adresini açın.
+2.  Ekranın altındaki **Paylaş (Share)** butonuna dokunun.
+3.  Açılan menüden **Ana Ekrana Ekle (Add to Home Screen)** seçeneğini seçin.
+4.  Uygulama adına "VibeParty" yazarak sağ üstteki **Ekle** butonuna dokunun.
 
 ### 🤖 Android (Chrome & Samsung Internet)
-1.  **Google Chrome** tarayıcısından oyun adresine gidin.
-2.  Ekranın altında beliren **"VibeTabu uygulamasını ana ekrana ekleyin"** banner'ına dokunun.
-3.  Eğer banner görünmüyorsa, sağ üstteki **üç nokta** menüsüne dokunun ve **Uygulamayı Yükle** veya **Ana Ekrana Ekle** seçeneğini seçin.
-4.  Açılan pencerede **Yükle** butonuna onay verin. Oyun artık uygulama çekmecenizde ve ana ekranınızda yer alacaktır!
+1.  Google Chrome tarayıcısından portal adresini açın.
+2.  Ekranın altında beliren **"Uygulamayı Ana Ekrana Ekle"** banner'ına dokunun.
+3.  Banner görünmüyorsa sağ üstteki üç noktaya tıklayıp **Uygulamayı Yükle** seçeneğini seçin.
 
 ---
 
 ## 🛠️ Yerel Kurulum ve Çalıştırma
 
-VibeTabu'yu bilgisayarınızda veya yerel ağınızda çalıştırmak oldukça basittir. Herhangi bir ekstra veritabanı veya karmaşık sunucu kurulumu gerektirmez.
+VibeParty herhangi bir ekstra veritabanı veya sunucu dili (PHP/Node) gerektirmez. Tamamen statik HTML/JS/CSS ile oluşturulmuştur:
 
-1.  Proje klasörünü bilgisayarınıza indirin.
-2.  Terminal veya komut satırını açıp proje klasörüne gidin.
-3.  Basit bir HTTP web sunucusu başlatın:
+1.  Proje klasörünü yerel bilgisayarınıza alın.
+2.  Terminalden klasörün içine girip basit bir HTTP sunucusu başlatın:
     ```bash
     # Python 3x yüklüyse:
     python -m http.server 8000
@@ -52,32 +95,28 @@ VibeTabu'yu bilgisayarınızda veya yerel ağınızda çalıştırmak oldukça b
     # veya NodeJS / NPM yüklüyse:
     npx http-server -p 8000
     ```
-4.  Tarayıcınızdan **`http://localhost:8000`** adresini açarak oynamaya başlayın!
+3.  Tarayıcınızdan **`http://localhost:8000`** adresine gidin.
 
 ---
 
-## ✍️ Yeni Kelimeler Ekleme Kılavuzu
+## ✍️ Kelime Ekleme Kılavuzları
 
-Oyuna kendi özel kelimelerinizi veya yeni kategorileri dahil etmek isterseniz, tek yapmanız gereken data/words.json dosyasını bir metin editörüyle açıp aşağıdaki formatta yeni kelimeler eklemektir:
-
+### 🎯 VibeTabu Kelimeleri Ekleme
+Proje içerisindeki [words.json](file:///e:/CakmaTabu/%C3%87akmaTabu/games/taboo/data/words.json) dosyasını açıp aşağıdaki formatta yeni objeler ekleyin:
 ```json
-[
-  {
-    "w": "HEDEF_KELİME",
-    "f": [
-      "Yasaklı_Kelime_1",
-      "Yasaklı_Kelime_2",
-      "Yasaklı_Kelime_3",
-      "Yasaklı_Kelime_4",
-      "Yasaklı_Kelime_5"
-    ],
-    "c": "Kategori_Adı",
-    "d": "ALL"
-  }
-]
+{
+  "w": "HEDEF_KELİME",
+  "f": ["Yasak_1", "Yasak_2", "Yasak_3", "Yasak_4", "Yasak_5"],
+  "c": "Kategori_Adı",
+  "d": "ALL"
+}
 ```
 
-*   `w`: Anlatılması gereken hedef kelime.
-*   `f`: Kullanılması kesinlikle yasak olan 5 adet tabu kelime.
-*   `c`: Kelimenin ait olduğu kategori adı (Örn: *Genel*, *Popüler Kültür*, *Spor*, *Yemek* vb.).
-*   `d`: Zorluk derecesi (*"K"* (Kolay), *"O"* (Orta), *"Z"* (Zor) veya karışık havuz için *"ALL"*).
+### 🖋️ Vibe X Verses Kelimeleri Ekleme
+Proje içerisindeki [categories.json](file:///e:/CakmaTabu/%C3%87akmaTabu/games/verses/data/categories.json) dosyasını açıp ilgili kategori altındaki `words` listesine sinonimleriyle (casus tahminleri) birlikte ekleyin:
+```json
+{
+  "w": "Gizli Kelime",
+  "synonyms": ["alternatif_tahmin_1", "alternatif_tahmin_2"]
+}
+```

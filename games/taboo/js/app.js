@@ -50,7 +50,6 @@ let reviewCountdownTime = 0;
 window.addEventListener('DOMContentLoaded', () => {
     loadWordsData();
     setupEventListeners();
-    registerServiceWorker();
 });
 
 /**
@@ -120,8 +119,8 @@ function initSetupScreen() {
  * Tüm DOM olay dinleyicilerini tanımlar.
  */
 function setupEventListeners() {
-    // Mobil tıklama gecikmesini gidermek için touch/pointer olayları kullanımı
-    const clickEvent = 'pointerdown';
+    // Mobil tıklama gecikmesini gidermek için standart click kullanımı
+    const clickEvent = 'click';
     
     // Genel dokunsal geri bildirim (Haptic Feedback) olay dinleyicisi
     document.addEventListener(clickEvent, (e) => {
@@ -598,6 +597,38 @@ function setupEventListeners() {
             initSetupScreen();
         });
     }
+
+    // Sayfa geçiş animasyonunu bağla (Outbound)
+    document.querySelectorAll('a').forEach(link => {
+        if (link.href && link.hostname === window.location.hostname && !link.target && !link.href.includes('#') && !link.href.startsWith('javascript:')) {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetUrl = link.href;
+                document.body.style.transition = 'opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)';
+                document.body.style.opacity = '0';
+                document.body.style.transform = 'translateY(-6px)';
+                setTimeout(() => {
+                    window.location.href = targetUrl;
+                }, 250);
+            });
+        }
+    });
+
+    // Geri tuşu basıldığında aktif tur sürelerini durdur ve sıfırla
+    window.addEventListener('popstate', (e) => {
+        if (roundInterval) {
+            clearInterval(roundInterval);
+            roundInterval = null;
+        }
+        if (reviewCountdownInterval) {
+            clearInterval(reviewCountdownInterval);
+            reviewCountdownInterval = null;
+        }
+        const stateVal = e.state;
+        if (stateVal && (stateVal.view === 'splash' || stateVal.view === 'setup')) {
+            resetGame();
+        }
+    });
 }
 
 /**
@@ -953,18 +984,7 @@ function setupGameOverView() {
     showView(views.gameOver);
 }
 
-/**
- * Service Worker kaydını yapar (PWA).
- */
-function registerServiceWorker() {
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('./sw.js')
-                .then(reg => console.log('SW Başarıyla Kaydedildi. Kapsam:', reg.scope))
-                .catch(err => console.warn('SW Kayıt Hatası:', err));
-        });
-    }
-}
+
 
 /**
  * Kategori seçim durumuna göre oyunu başlatma butonunun durumunu günceller.

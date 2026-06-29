@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html class="dark" lang="tr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport" />
+    <title>Vibe X Verses - Gizli Şair 🖋️</title>
+
+    <!-- Favicon & PWA Manifest -->
+    <link rel="icon" type="image/png" href="../../icon-192.png" />
+    <link rel="apple-touch-icon" href="../../icon-192.png" />
+    <link rel="manifest" href="../../manifest.json" />
+
+    <!-- Tailwind CSS ve Eklentileri -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <!-- Yerel Font & Material Simgeleri (Çevrimdışı Çalışma Desteği) -->
+    <link rel="stylesheet" href="../../css/fonts.css" />
+
+    <!-- Ortak Tasarım Sistemimiz (Geçiş Animasyonları vb.) -->
+    <link rel="stylesheet" href="../../css/styles.css" />
+
+    <!-- Tailwind Yapılandırması (Nocturne Tasarım Şemasına Göre) -->
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        // Nocturne Literary Social Renk Şeması
+                        background: "#0C0A09",
+                        surface: "#16130a",
+                        "surface-container": "#231f15",
+                        "surface-container-high": "#2d2a1f",
+                        "surface-container-highest": "#393429",
+                        primary: "#efc72d",
+                        "on-primary": "#3b2f00",
+                        "primary-container": "#d1ac00",
+                        "on-primary-container": "#514100",
+                        "on-surface": "#eae2d2",
+                        "on-surface-variant": "#d0c6ad",
+                        "outline-variant": "#4d4633",
+                        error: "#ffb4ab",
+                        "error-container": "#93000a",
+                        "on-error-container": "#ffdad6",
+                        secondary: "#ccc7a8"
+                    },
+                    spacing: {
+                        "container-padding": "24px",
+                        "gutter": "20px",
+                        "safe-area-bottom": "32px",
+                        base: "4px",
+                        xs: "8px",
+                        sm: "16px",
+                        md: "24px",
+                        lg: "40px",
+                        xl: "64px"
+                    },
+                    fontFamily: {
+                        mono: ["Courier Prime", "monospace"],
+                        h1: ["Inter", "sans-serif"],
+                        "h1-mobile": ["Inter", "sans-serif"],
+                        h2: ["Inter", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                        "verse-body": ["Playfair Display", "serif"],
+                        "verse-display": ["Playfair Display", "serif"],
+                        "label-caps": ["Inter", "sans-serif"],
+                        "mono-meta": ["Courier Prime", "monospace"]
+                    },
+                    fontSize: {
+                        "mono-meta": ["14px", { "lineHeight": "1.4", "fontWeight": "400" }],
+                        "h2": ["20px", { "lineHeight": "1.3", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "body": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "h1-mobile": ["24px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "h1": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "verse-body": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "verse-display": ["24px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0C0A09;
+            color: #eae2d2;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .glass-card {
+            background: rgba(28, 25, 23, 0.45);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(250, 244, 211, 0.08);
+        }
+
+        .text-glow {
+            text-shadow: 0 0 15px rgba(234, 195, 40, 0.35);
+        }
+
+        /* Kum Efekti Katmanı */
+        .grain-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            opacity: 0.02;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Sıra Kılavuz Çizgileri */
+        .step-line {
+            width: 1px;
+            background: linear-gradient(to bottom, #D1AC00 0%, transparent 100%);
+        }
+
+        /* Fingerprint Seal Button */
+        .seal-button {
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        .seal-button:active {
+            transform: scale(0.95);
+            border-color: rgba(239, 199, 45, 0.5);
+            box-shadow: 0 0 25px rgba(239, 199, 45, 0.15);
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); opacity: 0.6; }
+            100% { transform: scale(1.15); opacity: 0; }
+        }
+        .pulse-ring {
+            animation: pulse-ring 1.5s cubic-bezier(0.215, 0.610, 0.355, 1) infinite;
+        }
+
+        /* Underline inputs */
+        .verse-input-underline {
+            border-bottom: 1px solid rgba(153, 144, 121, 0.2);
+            transition: border-bottom-color 0.3s ease;
+        }
+        .verse-input-underline:focus-within {
+            border-bottom-color: #efc72d;
+        }
+
+        /* Tab Active Button */
+        .tab-active {
+            background-color: #2d2a1f;
+            color: #efc72d;
+            border-color: rgba(239, 199, 45, 0.15);
+        }
+    </style>
+</head>
+
+<body class="bg-surface font-body selection:bg-primary/30 h-screen w-screen overflow-hidden flex flex-col relative">
+
+    <!-- Gren Efekti -->
+    <div class="grain-overlay"></div>
+
+    <!-- 1. GÖRÜNÜM: ANA MENÜ (WELCOME SCREEN) -->
+    <section id="view-welcome" class="game-view active-view flex flex-col w-full h-[100dvh] overflow-hidden">
+        <!-- Top App Bar -->
+        <header class="bg-surface/80 backdrop-blur-md border-b border-outline-variant/10 fixed top-0 w-full z-50">
+            <div class="flex items-center justify-between px-md h-16 w-full max-w-[600px] mx-auto">
+                <a href="../../index.html" class="text-primary hover:opacity-80 transition-opacity flex items-center justify-center">
+                    <span class="material-symbols-outlined">arrow_back</span>
+                </a>
+                <h1 class="font-h1-mobile text-h1-mobile font-bold text-primary tracking-tight">Vibe X Verses</h1>
+                <div class="w-6"></div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-grow pt-24 pb-32 overflow-y-auto w-full max-w-[600px] mx-auto px-gutter flex flex-col gap-lg items-center">
+            
+            <!-- Hero Header -->
+            <div class="text-center mt-lg mb-sm">
+                <h2 class="font-h1 text-[36px] uppercase tracking-tighter text-glow mb-xs scale-105 sm:scale-110">
+                    VIBE <span class="text-primary italic font-light">X</span> VERSES
+                </h2>
+                <p class="font-mono-meta text-mono-meta text-on-surface-variant uppercase tracking-widest opacity-80">
+                    İpuçlarının Arkasındaki Casusu Bul.
+                </p>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-col gap-sm w-full max-w-xs">
+                <button id="btn-welcome-resume" class="hidden w-full bg-transparent border border-primary text-primary font-h2 text-h2 py-md rounded-lg flex items-center justify-center gap-xs uppercase active:scale-95 transition-all hover:bg-primary/5 duration-200 shadow-lg">
+                    <span>Oyuna Devam Et</span>
+                    <span class="material-symbols-outlined">history</span>
+                </button>
+                <button id="btn-welcome-start" class="w-full bg-primary-container text-on-primary font-h2 text-h2 py-md rounded-lg flex items-center justify-center gap-xs uppercase active:scale-95 duration-200 shadow-xl shadow-primary/10">
+                    <span>Oyunu Başlat</span>
+                    <span class="material-symbols-outlined">play_arrow</span>
+                </button>
+                <button id="btn-welcome-rules" class="w-full border border-outline-variant text-on-surface font-h2 text-h2 py-md rounded-lg flex items-center justify-center gap-xs uppercase active:scale-95 transition-all hover:bg-surface-container-high duration-200">
+                    <span class="material-symbols-outlined text-[20px]">help_center</span>
+                    <span>Nasıl Oynanır?</span>
+                </button>
+                <button id="btn-welcome-scenario" class="w-full border border-outline-variant text-on-surface font-h2 text-h2 py-md rounded-lg flex items-center justify-center gap-xs uppercase active:scale-95 transition-all hover:bg-surface-container-high duration-200">
+                    <span class="material-symbols-outlined text-[20px]">theater_comedy</span>
+                    <span>Örnek Senaryo</span>
+                </button>
+                <button id="btn-welcome-categories" class="w-full border border-outline-variant text-on-surface font-h2 text-h2 py-md rounded-lg flex items-center justify-center gap-xs uppercase active:scale-95 transition-all hover:bg-surface-container-high duration-200">
+                    <span class="material-symbols-outlined text-[20px]">menu_book</span>
+                    <span>Kategori Kılavuzu</span>
+                </button>
+                <a href="../../index.html" class="w-full border border-primary/20 text-primary font-h2 text-h2 py-md rounded-lg flex items-center justify-center gap-xs uppercase active:scale-95 transition-all hover:bg-primary/5 duration-200 text-center">
+                    <span class="material-symbols-outlined text-[20px]">home</span>
+                    <span>Ana Menüye Dön</span>
+                </a>
+            </div>
+
+            </div>
+        </main>
+
+    </section>
+
+
+    <!-- 2. GÖRÜNÜM: NASIL OYNANIR EKRANI -->
+    <section id="view-rules" class="game-view flex flex-col w-full h-[100dvh] overflow-hidden" style="display:none;">
+        <header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md border-b border-outline-variant/10 h-16">
+            <div class="flex items-center justify-between px-md h-full w-full max-w-[600px] mx-auto">
+                <button id="btn-rules-back" class="text-primary hover:opacity-80 transition-opacity active:scale-95 duration-200">
+                    <span class="material-symbols-outlined">arrow_back</span>
+                </button>
+                <h1 class="font-h1-mobile text-h1-mobile font-bold text-primary tracking-tight">Vibe X Verses</h1>
+                <div class="w-6"></div>
+            </div>
+        </header>
+
+        <main class="flex-grow w-full max-w-[600px] px-md pt-24 pb-32 overflow-y-auto mx-auto flex flex-col gap-lg">
+            <section class="text-center mb-md mt-4">
+                <span class="font-label-caps text-label-caps uppercase text-primary mb-xs block tracking-[0.2em]">Kılavuz</span>
+                <h2 class="font-h1-mobile text-h1-mobile text-on-surface">Nasıl Oynanır?</h2>
+                <p class="font-body text-on-surface-variant max-w-[400px] mx-auto opacity-70 mt-1">
+                    Basit bir kelime oyunu: Ekibin içinde kelimeyi koruyacak mısın, yoksa casus olarak sızacak mısın?
+                </p>
+            </section>
+
+            <!-- Flow steps -->
+            <div class="relative space-y-md">
+                <div class="absolute left-[31px] top-12 bottom-12 step-line hidden sm:block"></div>
+                
+                <!-- Step 1 -->
+                <div class="glass-card rounded-xl p-md flex items-start gap-md relative overflow-hidden group">
+                    <div class="bg-primary/10 border border-primary/20 w-16 h-16 rounded-full flex items-center justify-center shrink-0 z-10">
+                        <span class="material-symbols-outlined text-primary text-[32px]">visibility</span>
+                    </div>
+                    <div class="flex-grow pt-base">
+                        <h3 class="font-h2 text-h2 text-on-surface mb-xs">1. Rolünü Gör</h3>
+                        <p class="font-body text-on-surface-variant text-[15px] leading-relaxed">
+                            Her tur başında gizli bir kelime belirlenir. Oyuncuların çoğu (Ekip) kelimeyi görürken, en az bir kişi "Casus" olarak hiçbir şey bilmeden oyuna başlar.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="glass-card rounded-xl p-md flex items-start gap-md relative overflow-hidden group">
+                    <div class="bg-primary/10 border border-primary/20 w-16 h-16 rounded-full flex items-center justify-center shrink-0 z-10">
+                        <span class="material-symbols-outlined text-primary text-[32px]">edit_note</span>
+                    </div>
+                    <div class="flex-grow pt-base">
+                        <h3 class="font-h2 text-h2 text-on-surface mb-xs">2. İpucu Yaz</h3>
+                        <p class="font-body text-on-surface-variant text-[15px] leading-relaxed">
+                            Tüm oyuncular sırayla en fazla 35 karakterlik cümleler yazar. Her oyuncu sadece kendisinden bir önceki oyuncunun son ipucunu görebilir. Casus ise bu ipucuna bakarak kelimeyi tahmin etmeye ve zincire kaynamaya çalışır.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="glass-card rounded-xl p-md flex items-start gap-md relative overflow-hidden group">
+                    <div class="bg-primary/10 border border-primary/20 w-16 h-16 rounded-full flex items-center justify-center shrink-0 z-10">
+                        <span class="material-symbols-outlined text-primary text-[32px]">groups</span>
+                    </div>
+                    <div class="flex-grow pt-base">
+                        <h3 class="font-h2 text-h2 text-on-surface mb-xs">3. Casusu Oyla</h3>
+                        <p class="font-body text-on-surface-variant text-[15px] leading-relaxed">
+                            Turlar bittiğinde tüm ipucu zinciri baştan sona sesli okunur. Zinciri koparan, kelimeyi yediremeyen Casus bulunmaya çalışılır.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <button id="btn-rules-home" class="w-full py-md bg-transparent border border-outline-variant text-on-surface font-h2 text-h2 rounded-lg flex items-center justify-center gap-xs uppercase active:scale-95 transition-all mt-4">
+                <span>Ana Menüye Dön</span>
+            </button>
+        </main>
+    </section>
+
+
+    <!-- 3. GÖRÜNÜM: OYUNCU KURULUM EKRANI (GAME SETUP SCREEN) -->
+    <section id="view-setup" class="game-view flex flex-col w-full h-[100dvh] overflow-hidden" style="display:none;">
+        <header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md border-b border-outline-variant/10 h-16">
+            <div class="flex items-center justify-between px-md h-full w-full max-w-[600px] mx-auto">
+                <button id="btn-setup-back" class="hover:opacity-80 transition-opacity active:scale-95 duration-200 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-primary">arrow_back</span>
+                </button>
+                <h1 class="font-h1-mobile text-h1-mobile font-bold text-primary tracking-tight">Vibe X Verses</h1>
+                <div class="w-10"></div>
+            </div>
+        </header>
+
+        <main class="w-full max-w-[600px] px-sm pt-24 pb-32 flex flex-col gap-lg mt-4 mx-auto overflow-y-auto">
+            
+            <!-- Setup Title -->
+            <section class="text-center space-y-xs animate-in fade-in slide-in-from-bottom-4 duration-700">
+                <span class="font-label-caps text-label-caps text-primary uppercase tracking-[0.2em]">Oda Hazırlığı</span>
+                <h2 class="font-h1 text-[26px] text-on-surface">Oyuncuları Çağır</h2>
+                <p class="font-mono-meta text-mono-meta text-on-surface-variant max-w-[400px] mx-auto mt-1">
+                    Kelime oyununun başladığı yer. En az 4 oyuncu ile ipucu zincirini kurmaya başlayabilirsiniz.
+                </p>
+            </section>
+
+            <!-- Name Input Field -->
+            <section class="space-y-md px-base">
+                <form id="form-setup-add" class="relative group flex items-center w-full">
+                    <input class="w-full bg-transparent border-0 border-b border-outline-variant/30 py-4 pr-12 text-h2 font-h2 text-on-surface placeholder:text-on-surface-variant/40 focus:outline-none focus:ring-0 focus:border-primary transition-all duration-300" 
+                         id="input-setup-name" placeholder="Oyuncu ismini girin..." type="text" maxlength="12" required/>
+                    <button type="submit" class="absolute right-0 top-1/2 -translate-y-1/2 bg-primary-container text-on-primary-container p-2 rounded-lg hover:opacity-90 active:scale-90 transition-all flex items-center justify-center">
+                        <span class="material-symbols-outlined">add</span>
+                    </button>
+                </form>
+
+                <!-- Added Players list -->
+                <div class="flex flex-wrap gap-xs min-h-[48px] pt-2" id="setup-player-list">
+                    <p class="text-on-surface-variant/40 font-mono-meta text-sm italic py-2" id="setup-empty-state">Henüz kimse katılmadı...</p>
+                </div>
+            </section>
+
+            <!-- Game Settings Card -->
+            <section class="glass-card rounded-xl p-md space-y-lg mx-base">
+                <!-- Round Settings -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-sm">
+                    <div>
+                        <h3 class="font-h2 text-h2 text-on-surface">Tur Sayısı</h3>
+                        <p class="font-mono-meta text-xs text-on-surface-variant mt-0.5">Mücadelenin uzunluğunu belirleyin</p>
+                    </div>
+                    <div class="flex bg-surface-container rounded-lg p-base border border-outline-variant/10 self-start sm:self-auto">
+                        <button id="btn-round-1" class="px-md py-xs font-label-caps text-[10px] rounded-lg transition-all text-on-surface-variant/60 hover:text-on-surface">1 TUR</button>
+                        <button id="btn-round-2" class="px-md py-xs font-label-caps text-[10px] rounded-lg transition-all tab-active">2 TUR</button>
+                        <button id="btn-round-3" class="px-md py-xs font-label-caps text-[10px] rounded-lg transition-all text-on-surface-variant/60 hover:text-on-surface">3 TUR</button>
+                    </div>
+                </div>
+                
+                <!-- Double Spy Settings -->
+                <div id="setup-double-spy-row" class="pt-sm border-t border-outline-variant/10 flex items-center justify-between opacity-30 transition-all duration-300">
+                    <div class="flex flex-col">
+                        <span class="font-h2 text-h2 text-on-surface">Çift Casus Modu</span>
+                        <span id="setup-double-spy-desc" class="font-mono-meta text-xs text-on-surface-variant mt-0.5">En az 6 oyuncu gereklidir</span>
+                    </div>
+                    <button type="button" id="btn-toggle-double-spy" class="w-12 h-6 rounded-full bg-outline-variant/30 relative transition-all duration-300 flex items-center px-0.5 cursor-not-allowed" disabled>
+                        <div class="w-5 h-5 rounded-full bg-on-surface-variant/60 shadow-sm transition-all duration-300" id="btn-toggle-double-spy-knob"></div>
+                    </button>
+                </div>
+
+                <!-- Writing Timer Settings -->
+                <div class="pt-sm border-t border-outline-variant/10 flex flex-col sm:flex-row sm:items-center justify-between gap-sm">
+                    <div class="flex flex-col">
+                        <span class="font-h2 text-h2 text-on-surface">Düşünme Süresi</span>
+                        <span class="font-mono-meta text-xs text-on-surface-variant mt-0.5">İpucu yazma süresini kısıtlayın</span>
+                    </div>
+                    <div class="flex bg-surface-container rounded-lg p-base border border-outline-variant/10 self-start sm:self-auto" id="setup-timer-pills">
+                        <button type="button" id="btn-timer-off" class="px-md py-xs font-label-caps text-[10px] rounded-lg transition-all tab-active">Kapat</button>
+                        <button type="button" id="btn-timer-45" class="px-md py-xs font-label-caps text-[10px] rounded-lg transition-all text-on-surface-variant/60 hover:text-on-surface">45 sn</button>
+                        <button type="button" id="btn-timer-90" class="px-md py-xs font-label-caps text-[10px] rounded-lg transition-all text-on-surface-variant/60 hover:text-on-surface">90 sn</button>
+                    </div>
+                </div>
+
+                <!-- Fixed Limit Info -->
+                <div class="pt-sm border-t border-outline-variant/10 flex items-center justify-between">
+                    <div class="flex flex-col">
+                        <span class="font-h2 text-h2 text-on-surface">Karakter Limiti</span>
+                        <span class="font-mono-meta text-xs text-on-surface-variant mt-0.5">Tur başına yazım kısıtlaması</span>
+                    </div>
+                    <span class="font-mono-meta text-sm text-primary font-bold">35 KARAKTER</span>
+                </div>
+            </section>
+
+            <!-- Decorative Quote -->
+            <section class="py-sm">
+                <div class="text-center italic opacity-60">
+                    <p class="font-verse-body text-verse-body text-on-surface text-[15px]">"Dikkat et, tek bir alakasız kelime zinciri koparır."</p>
+                    <p class="font-mono-meta text-xs mt-xs text-primary uppercase tracking-widest">— Salon Rehberi</p>
+                </div>
+            </section>
+        </main>
+
+        <!-- Fixed Footer Action -->
+        <footer class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[600px] p-md z-40">
+            <div class="bg-surface/90 backdrop-blur-xl border-t border-outline-variant/10 p-sm rounded-t-xl">
+                <button class="w-full h-14 bg-outline-variant/20 text-on-surface-variant/40 font-h2 text-h2 rounded-lg cursor-not-allowed transition-all flex items-center justify-center gap-sm active:scale-98" 
+                    disabled id="btn-setup-start">
+                    <span>OYUNU BAŞLAT</span>
+                    <span class="font-mono-meta text-sm" id="setup-player-counter">(0/4)</span>
+                </button>
+            </div>
+        </footer>
+    </section>
+
+
+    <!-- 4. GÖRÜNÜM: ROL DAĞITIM TÜNELİ (ROLE ASSIGNMENT LOOP) -->
+    <section id="view-role-distribution" class="game-view flex flex-col w-full h-[100dvh] overflow-hidden" style="display:none;">
+        <header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md border-b border-outline-variant/10 h-16">
+            <div class="flex items-center justify-between px-md h-full w-full max-w-[600px] mx-auto">
+                <button id="btn-dist-cancel" class="text-on-surface-variant hover:opacity-80 transition-opacity active:scale-95 duration-200 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-primary">close</span>
+                </button>
+                <h1 class="font-h1-mobile text-h1-mobile font-bold text-primary tracking-tight">Vibe X Verses</h1>
+                <div class="w-6"></div>
+            </div>
+        </header>
+
+        <main class="relative z-10 flex-1 flex flex-col items-center justify-center px-gutter max-w-[600px] mx-auto w-full pt-16">
+            
+            <!-- AŞAMA A EKRANI (Cihaz Teslimi) -->
+            <div id="dist-panel-a" class="w-full flex flex-col items-center text-center gap-6 animate-fade-in">
+                <div>
+                    <p class="font-label-caps text-label-caps uppercase text-on-surface-variant tracking-[0.2em] mb-xs">Cihazı Uzatın</p>
+                    <h2 class="font-h1-mobile text-[22px] text-on-surface leading-normal">
+                        Telefonu şimdi sıradaki oyuncumuz <br>
+                        <span id="dist-target-player" class="text-primary font-bold text-2xl uppercase block mt-3 tracking-widest text-glow">...</span>
+                        teslim edin.
+                    </h2>
+                </div>
+                
+                <button id="btn-dist-reveal-trigger" class="w-full max-w-xs py-md bg-primary-container text-on-primary font-h2 text-h2 rounded-lg flex items-center justify-center gap-xs uppercase active:scale-[0.98] transition-all shadow-lg mt-4">
+                    <span>Rolümü Göster</span>
+                    <span class="material-symbols-outlined">visibility</span>
+                </button>
+            </div>
+
+            <!-- AŞAMA B EKRANI (Gizli Bilgi - Basılı Tutma Alanı) -->
+            <div id="dist-panel-b" class="hidden w-full flex flex-col items-center text-center gap-md select-none touch-none animate-fade-in">
+                <div class="mb-lg">
+                    <p class="font-label-caps text-label-caps uppercase text-on-surface-variant tracking-[0.2em] mb-xs">Kimliğini Belirle</p>
+                    <h2 class="font-h1-mobile text-h1-mobile text-on-surface">Mühre basılı tutarak rolünü gör</h2>
+                </div>
+
+                <!-- Role Reveal Card (Hidden by Default) -->
+                <div class="absolute inset-0 bg-stone-950/95 backdrop-blur-xl opacity-0 scale-95 pointer-events-none transition-all duration-200 flex flex-col items-center justify-center text-center w-full px-gutter z-20" id="dist-role-card">
+                    <div class="bg-surface-container/40 border border-primary/20 p-lg rounded-xl flex flex-col items-center gap-base max-w-[320px] mx-auto shadow-2xl">
+                        <div class="flex items-center justify-center gap-xs mb-1">
+                            <div id="dist-card-color-dot" class="w-3.5 h-3.5 rounded-full border border-background/30 shadow-sm"></div>
+                            <span id="dist-card-color" class="font-label-caps text-xs font-semibold uppercase tracking-wider">Oyuncu Rengin: ...</span>
+                        </div>
+                        <span id="dist-card-category" class="font-mono-meta text-mono-meta text-primary/80 uppercase tracking-widest">Kategori: ...</span>
+                        <span id="dist-card-keyword" class="font-verse-display text-verse-display text-primary italic font-bold">Kelime: ...</span>
+                        <div class="w-12 h-[1px] bg-outline-variant/30 my-xs"></div>
+                        <p id="dist-card-instruction" class="font-body text-[13px] text-on-surface-variant leading-relaxed">İpucu yazarken bu kelimeyi gizlice işle.</p>
+                    </div>
+                </div>
+
+                <!-- Fingerprint Seal Button -->
+                <div class="relative mt-8">
+                    <!-- Pulsing outer rings -->
+                    <div class="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300" id="dist-rings">
+                        <div class="absolute w-44 h-44 border border-primary/20 rounded-full pulse-ring"></div>
+                        <div class="absolute w-44 h-44 border border-primary/10 rounded-full pulse-ring" style="animation-delay: 0.5s"></div>
+                    </div>
+                    <!-- The Seal Button -->
+                    <button class="seal-button relative w-36 h-36 rounded-full bg-surface-container-high border border-outline-variant/20 flex items-center justify-center overflow-hidden select-none touch-none" 
+                        id="btn-dist-seal-hold">
+                        <div class="absolute inset-0 bg-gradient-to-tr from-primary/15 to-transparent opacity-50"></div>
+                        <div class="relative flex flex-col items-center text-primary">
+                            <span class="material-symbols-outlined text-[56px] transition-all duration-300" id="dist-seal-icon">fingerprint</span>
+                        </div>
+                        <div class="absolute bottom-0 left-0 w-full bg-primary/15 h-0 transition-all duration-[1.5s] ease-linear" id="dist-fill-effect"></div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- AŞAMA C EKRANI (Güvenli Geçiş) -->
+            <div id="dist-panel-c" class="hidden w-full flex flex-col items-center text-center gap-6 animate-fade-in">
+                <span class="material-symbols-outlined text-[64px] text-primary animate-pulse">check_circle</span>
+                <div>
+                    <h2 class="font-h1-mobile text-2xl text-on-surface font-light tracking-wide">Rolün Güvende</h2>
+                    <p class="font-body text-sm text-on-surface-variant mt-2 leading-relaxed">
+                        Rolün başarıyla kaydedildi ve ekrandan temizlendi! Telefonu ters çevirip masaya bırakabilirsin.
+                    </p>
+                </div>
+                <button id="btn-dist-next" class="w-full max-w-xs py-md bg-primary text-on-primary font-h2 text-h2 rounded-lg flex items-center justify-center gap-xs uppercase active:scale-[0.98] transition-all mt-4">
+                    <span>Sıradaki Oyuncu</span>
+                    <span class="material-symbols-outlined">arrow_forward</span>
+                </button>
+            </div>
+
+            <!-- Footer count indicator -->
+            <div class="absolute bottom-xl w-full text-center px-gutter">
+                <div class="inline-flex items-center gap-xs px-md py-xs bg-surface-container-high/50 rounded-full border border-outline-variant/10">
+                    <div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+                    <span id="dist-ready-indicator" class="font-mono-meta text-[11px] text-on-surface-variant uppercase tracking-wider">...</span>
+                </div>
+            </div>
+        </main>
+    </section>
+
+
+    <!-- 5. GÖRÜNÜM: ŞİİR YAZMA EKRANI (WRITING PAD) -->
+    <section id="view-writing" class="game-view flex flex-col w-full h-[100dvh] overflow-hidden" style="display:none;">
+        <header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md border-b border-outline-variant/10 h-16">
+            <div class="flex items-center justify-between px-md h-full w-full max-w-[600px] mx-auto">
+                <button id="btn-writing-cancel" class="text-on-surface-variant hover:opacity-80 transition-opacity active:scale-95 duration-200 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-primary">close</span>
+                </button>
+                <h1 class="font-h1-mobile text-h1-mobile font-bold text-primary tracking-tight">Vibe X Verses</h1>
+                <div class="w-6"></div>
+            </div>
+        </header>
+
+        <!-- EKRAN A (Sıra Bildirimi) -->
+        <main id="writing-panel-a" class="pt-24 pb-32 px-gutter w-full max-w-[600px] mx-auto min-h-screen flex flex-col items-center justify-center text-center gap-6 animate-fade-in">
+            <span class="material-symbols-outlined text-[64px] text-primary animate-bounce">swap_horizontal_circle</span>
+            <div>
+                <p class="font-label-caps text-label-caps uppercase text-on-surface-variant tracking-[0.2em] mb-xs">Sıra Rastgele Seçildi</p>
+                <h2 class="font-h1-mobile text-[22px] text-on-surface leading-normal">
+                    Telefonu şimdi ipucunu yazması için <br>
+                    <span id="writing-target-player" class="text-primary font-bold text-2xl uppercase block mt-3 tracking-widest text-glow">...</span>
+                    uzatın.
+                </h2>
+            </div>
+            
+            <button id="btn-writing-start-trigger" class="w-full max-w-xs py-md bg-primary-container text-on-primary font-h2 text-h2 rounded-lg flex items-center justify-center gap-xs uppercase active:scale-[0.98] transition-all shadow-lg mt-2">
+                <span>Yazmaya Başla</span>
+                <span class="material-symbols-outlined">edit</span>
+            </button>
+        </main>
+
+        <!-- EKRAN B (Yazma Paneli) -->
+        <main id="writing-panel-b" class="hidden pt-24 pb-32 px-gutter w-full max-w-[600px] mx-auto min-h-screen flex flex-col justify-between animate-fade-in">
+            
+            <!-- Writing Timer Countdown Indicator (Hidden by default) -->
+            <div id="writing-timer-container" class="hidden items-center justify-center gap-xs px-md py-xs bg-error-container/10 border border-error/25 rounded-full w-fit mx-auto animate-pulse">
+                <span class="material-symbols-outlined text-[16px] text-error">hourglass_bottom</span>
+                <span id="writing-timer-seconds" class="font-mono-meta text-[13px] text-error font-bold tracking-wider">00:45</span>
+            </div>
+
+            <!-- Category Banner -->
+            <div class="text-center mb-lg mt-4">
+                <span class="font-label-caps text-label-caps uppercase text-on-surface-variant tracking-[0.2em] block">KATEGORİ:</span>
+                <h2 id="writing-panel-category" class="font-h2 text-h2 text-primary mt-base uppercase">...</h2>
+            </div>
+
+            <!-- Exquisite Corpse context -->
+            <div class="space-y-sm mb-lg">
+                <!-- Censored older verses -->
+                <div id="writing-censored-feed" class="glass-card rounded-lg p-lg text-center relative overflow-hidden">
+                    <div class="absolute inset-0 flex items-center justify-center bg-surface/40 backdrop-blur-md z-10">
+                        <span class="font-mono-meta text-mono-meta text-on-surface-variant/80 italic">[Önceki İpuçları Gizlendi 🔒]</span>
+                    </div>
+                    <p class="font-verse-body text-verse-body opacity-20">
+                        Bir sabah uyandım mailler arasında,<br/>
+                        KPI'lar dans ederken excel masasında.
+                    </p>
+                </div>
+                <!-- Net last verse line -->
+                <div id="writing-last-line-container" class="text-center px-sm">
+                    <span class="font-label-caps text-label-caps uppercase text-on-surface-variant/60 block mb-xs">Son İpucu:</span>
+                    <p id="writing-previous-line-text" class="font-verse-display text-verse-display text-on-surface italic">
+                        "..."
+                    </p>
+                </div>
+            </div>
+
+            <!-- Text typing input area -->
+            <div class="flex-grow flex flex-col items-center justify-center">
+                <div class="w-full verse-input-underline py-base mb-sm">
+                    <textarea class="w-full bg-transparent border-none text-center font-verse-display text-verse-display text-on-surface placeholder:text-on-surface-variant/30 resize-none focus:ring-0 focus:outline-none" 
+                        id="input-poetry-verse" maxlength="35" placeholder="İpucunu buraya yaz..." rows="2"></textarea>
+                </div>
+                
+                <!-- Indicators & Actions -->
+                <div class="flex justify-between items-center w-full px-base">
+                    <span class="font-mono-meta text-mono-meta text-on-surface-variant/60" id="writing-char-counter">0 / 35</span>
+                    
+                    <!-- Spy Bluff Guess Button -->
+                    <button id="btn-writing-spy-guess" class="hidden items-center gap-xs text-on-surface-variant hover:text-primary transition-colors group">
+                        <span class="material-symbols-outlined text-[18px]">visibility_off</span>
+                        <span class="font-label-caps text-label-caps uppercase group-hover:underline decoration-primary underline-offset-4">Anahtar Kelimeyi Tahmin Et</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Action buttons -->
+            <div class="mt-xl text-center">
+                <button id="btn-writing-submit" class="w-full py-md bg-primary-container text-on-primary font-h2 text-h2 font-bold uppercase tracking-widest opacity-40 cursor-not-allowed rounded-lg active:scale-[0.98] transition-all" disabled>
+                    İpucunu Onayla
+                </button>
+                <p id="writing-footer-meta" class="mt-md font-mono-meta text-xs text-on-surface-variant/40 italic">
+                    Sıradaki oyuncu bekleniyor...
+                </p>
+            </div>
+        </main>
+
+        <!-- EKRAN C (Geçiş Ekranı) -->
+        <main id="writing-panel-c" class="hidden pt-24 pb-32 px-gutter w-full max-w-[600px] mx-auto min-h-screen flex flex-col items-center justify-center text-center gap-6 animate-fade-in">
+            <span class="material-symbols-outlined text-[64px] text-primary animate-pulse">lock_person</span>
+            <div>
+                <h2 class="font-h1-mobile text-2xl text-on-surface font-light tracking-wide">İpucun Kilitlendi</h2>
+                <p class="font-body text-sm text-on-surface-variant mt-2 leading-relaxed">
+                    İpucun başarıyla zincire eklendi ve gizlendi! Telefonu şimdi ters çevirip masaya bırakabilir veya sıradakine verebilirsin.
+                </p>
+            </div>
+            <button id="btn-writing-confirm-pass" class="w-full max-w-xs py-md bg-primary text-on-primary font-h2 text-h2 rounded-lg flex items-center justify-center gap-xs uppercase active:scale-[0.98] transition-all mt-4">
+                <span>Sıradaki Oyuncuya Geç</span>
+                <span class="material-symbols-outlined">arrow_forward</span>
+            </button>
+        </main>
+    </section>
+
+
+    <!-- 6. GÖRÜNÜM: İFŞA VE TARTIŞMA EKRANI (THE DEBATE ROOM) -->
+    <section id="view-reveal" class="game-view flex flex-col w-full h-[100dvh] overflow-hidden" style="display:none;">
+        <!-- Top App Bar -->
+        <nav class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md border-b border-outline-variant/10 h-16">
+            <div class="flex items-center justify-between px-md h-full w-full max-w-[600px] mx-auto">
+                <button id="btn-reveal-reset" class="text-on-surface-variant hover:opacity-80 transition-opacity active:scale-95 duration-200 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-primary">restart_alt</span>
+                </button>
+                <h1 class="font-h1-mobile text-h1-mobile font-bold text-primary tracking-tight">Vibe X Verses</h1>
+                <div class="w-6"></div>
+            </div>
+        </nav>
+
+        <main class="relative z-10 w-full max-w-[600px] mx-auto min-h-screen pt-24 pb-32 px-gutter flex flex-col items-center overflow-y-auto">
+            
+            <!-- Header Text -->
+            <header class="text-center mb-lg mt-2">
+                <h2 class="font-h2 text-h2 text-primary mb-xs uppercase tracking-widest">TARTIŞMA SALONU</h2>
+                <p class="font-mono-meta text-xs text-on-surface-variant opacity-70 italic">İpuçlarını dikkatlice süzün. Gerçek, cümlelerin arasına gizlenmiştir.</p>
+            </header>
+
+            <!-- Main Poetry Parchment Card -->
+            <div class="glass-card w-full rounded-lg overflow-hidden shadow-2xl flex flex-col min-h-[420px] max-h-[500px]">
+                
+                <!-- Verse Feed Header -->
+                <div class="px-md py-sm border-b border-outline-variant/10 flex justify-between items-center bg-surface-container-high/40">
+                    <span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">İPUCU ZİNCİRİ // SALON #402</span>
+                    <span class="flex items-center gap-xs font-mono-meta text-[11px] text-primary">
+                        <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                        TARTIŞMA AKTİF
+                    </span>
+                </div>
+
+                <!-- Scrollable Verses List -->
+                <div id="reveal-poetry-scroll" class="flex-grow overflow-y-auto px-md py-lg space-y-lg select-none">
+                    <!-- Dynamic poetry lines will be injected here by ui.js -->
+                </div>
+
+                <div class="h-1 bg-gradient-to-r from-transparent via-primary/20 to-transparent"></div>
+            </div>
+
+            <!-- Debate Callout -->
+            <p class="font-body text-xs text-on-surface-variant/70 text-center mt-sm max-w-[320px] leading-relaxed">
+                İpucu zincirini sesli okuyun ve aranızdaki Casus'u tartışarak bulun!
+            </p>
+
+            <!-- Expose Action -->
+            <div class="w-full mt-lg px-base">
+                <button id="btn-reveal-expose" class="w-full bg-primary text-on-primary font-h2 text-h2 py-md rounded-lg shadow-[0_10px_40px_rgba(209,172,0,0.15)] hover:brightness-105 active:scale-[0.98] transition-all duration-300 uppercase flex items-center justify-center gap-xs">
+                    <span>Rolleri İfşa Et!</span>
+                    <span class="material-symbols-outlined">visibility</span>
+                </button>
+            </div>
+        </main>
+    </section>
+
+
+    <!-- 7. GÖRÜNÜM: SONUÇ EKRANI (GAME OVER / LEADERBOARD) -->
+    <section id="view-game-over" class="game-view flex flex-col w-full h-[100dvh] overflow-hidden" style="display:none;">
+        <header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md border-b border-outline-variant/10 h-16">
+            <div class="flex items-center justify-between px-md h-full w-full max-w-[600px] mx-auto">
+                <div class="w-6"></div>
+                <h1 class="font-h1-mobile text-h1-mobile font-bold text-primary tracking-tight">Vibe X Verses</h1>
+                <div class="w-6"></div>
+            </div>
+        </header>
+
+        <main class="w-full max-w-[600px] px-md pt-24 pb-32 relative z-10 flex flex-col items-center mx-auto overflow-y-auto">
+            
+            <!-- Result Announcement Section -->
+            <section class="w-full text-center mb-lg mt-4 animate-in fade-in duration-500">
+                <div class="inline-block px-base py-xs bg-error-container text-on-error-container font-label-caps text-[10px] uppercase rounded-lg mb-sm tracking-widest">
+                    OTURUM SONA ERDİ
+                </div>
+                <h2 id="gameover-title" class="font-h1 text-[32px] md:text-h1 font-extrabold text-primary mb-xs leading-none tracking-tight">
+                    KAZANAN: CASUS!
+                </h2>
+                <div class="flex items-center justify-center gap-xs text-on-surface-variant mt-1.5">
+                    <span class="font-mono-meta text-[12px] uppercase tracking-wider opacity-70">Gerçek Kelime:</span>
+                    <span id="gameover-keyword" class="font-mono-meta text-[13px] text-on-surface font-bold">[...]</span>
+                </div>
+                
+                <!-- Spy guess correct annotation -->
+                <p id="gameover-spy-status" class="font-body text-xs text-secondary mt-1 max-w-[320px] mx-auto italic hidden">
+                    (Casus kelimeyi bildi ve sıyrıldı!)
+                </p>
+            </section>
+
+            <!-- Final Poetry Card (The Reveal) -->
+            <div class="glass-card w-full rounded-xl p-lg mb-xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-sm opacity-10">
+                    <span class="material-symbols-outlined text-[56px]">history_edu</span>
+                </div>
+                
+                <div id="gameover-poetry-lines" class="space-y-lg relative z-10">
+                    <!-- Dynamic lines showing writer names and roles will be injected here by ui.js -->
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="w-full space-y-md px-base">
+                <button id="btn-gameover-same-players" class="w-full py-md bg-primary-container text-on-primary font-h2 text-h2 uppercase rounded-lg hover:opacity-90 transition-all active:scale-[0.98] duration-200 shadow-lg shadow-primary/10">
+                    Aynı Kadroyla Yeniden Oyna
+                </button>
+                <button id="btn-gameover-new-players" class="w-full py-md bg-transparent border border-outline-variant/30 text-on-surface font-h2 text-h2 uppercase rounded-lg hover:bg-white/5 transition-all active:scale-[0.98] duration-200">
+                    Yeni Oyuncularla Başla
+                </button>
+                <div class="pt-sm text-center">
+                    <button id="btn-gameover-home" class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors uppercase underline decoration-primary/30 underline-offset-4">
+                        Ana Menüye Dön
+                    </button>
+                </div>
+            </div>
+
+            <!-- Bento Stats -->
+            <div class="grid grid-cols-2 gap-sm w-full mt-xl">
+                <div class="glass-card rounded-lg p-md flex flex-col items-center justify-center text-center">
+                    <span class="font-label-caps text-[10px] text-on-surface-variant mb-xs tracking-wider">ZİNCİR UZUNLUĞU</span>
+                    <span id="stat-poetry-lines" class="font-h1 text-h1 text-primary">0 İpucu</span>
+                </div>
+                <div class="glass-card rounded-lg p-md flex flex-col items-center justify-center text-center">
+                    <span class="font-label-caps text-[10px] text-on-surface-variant mb-xs tracking-wider">TOPLAM SÜRE</span>
+                    <span id="stat-game-duration" class="font-h1 text-h1 text-on-surface">00:00</span>
+                </div>
+            </div>
+        </main>
+    </section>
+
+
+    <!-- ==================== MODAL OVERLAYS ==================== -->
+
+    <!-- Categories Modal -->
+    <div id="categories-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/75 backdrop-blur-md px-gutter animate-fade-in" style="display:none;">
+        <div class="glass-card w-full max-w-[400px] rounded-xl p-md flex flex-col gap-md max-h-[80vh] overflow-y-auto select-none">
+            <div class="flex items-center justify-between border-b border-outline-variant/10 pb-xs">
+                <h3 class="font-h2 text-h2 text-primary uppercase">KATEGORİLER</h3>
+                <button id="btn-close-categories" class="text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center p-1">
+                    <span class="material-symbols-outlined text-lg">close</span>
+                </button>
+            </div>
+            <div class="flex flex-col gap-sm mt-2" id="categories-modal-list">
+                <!-- Dynamically populated categories lists in ui.js -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Guess Keyword Modal (For Spy) -->
+    <div id="guess-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/75 backdrop-blur-md px-gutter animate-fade-in" style="display:none;">
+        <div class="glass-card w-full max-w-[360px] rounded-xl p-md flex flex-col gap-md text-center">
+            <div class="flex flex-col gap-xs">
+                <h3 class="font-h2 text-h2 text-primary uppercase">ANAHTAR KELİME TAHMİNİ</h3>
+                <p class="font-body text-xs text-on-surface-variant opacity-75">
+                    Kelimeyi çözdün mü? Bu tur için tek bir tahmin hakkın var. Doğru bilirsen ifşa olsan bile sıyrılırsın!
+                </p>
+            </div>
+
+            <div class="relative verse-input-underline py-2 my-2">
+                <input class="w-full bg-transparent border-none text-center font-verse-display text-verse-display text-on-surface placeholder:text-on-surface-variant/30 focus:ring-0 focus:outline-none" 
+                    id="input-spy-guess-word" placeholder="Kelimeyi buraya yaz..." type="text" required/>
+            </div>
+
+            <div class="flex gap-2.5 mt-2">
+                <button id="btn-close-guess" class="flex-1 py-3 border border-outline-variant text-on-surface font-label-caps text-label-caps rounded-lg uppercase active:scale-95 transition-all">
+                    İptal
+                </button>
+                <button id="btn-submit-spy-guess" class="flex-1 py-3 bg-primary text-on-primary font-label-caps text-label-caps rounded-lg uppercase active:scale-95 transition-all shadow-md">
+                    Tahmin Et
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Expose Decision Modal -->
+    <div id="expose-decision-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/75 backdrop-blur-md px-gutter animate-fade-in" style="display:none;">
+        <div class="glass-card w-full max-w-[360px] rounded-xl p-md flex flex-col gap-md text-center">
+            <div class="flex flex-col gap-xs">
+                <h3 class="font-h2 text-h2 text-primary uppercase">Masa Oylaması Kararı</h3>
+                <p class="font-body text-xs text-on-surface-variant opacity-75 mt-1 leading-normal">
+                    Masa kararını verdi mi? Ekip tartışma sonucunda Casus'u bulabildi mi?
+                </p>
+            </div>
+
+            <div class="flex flex-col gap-sm mt-3">
+                <button id="btn-expose-found" class="w-full py-md bg-primary text-on-primary font-h2 text-h2 rounded-lg flex items-center justify-center gap-xs uppercase active:scale-95 transition-all shadow-md">
+                    <span>Evet, Casusu Bulduk</span>
+                    <span class="material-symbols-outlined text-sm">done</span>
+                </button>
+                <button id="btn-expose-escaped" class="w-full py-md border border-outline-variant text-on-surface font-h2 text-h2 rounded-lg flex items-center justify-center gap-xs uppercase active:scale-95 transition-all hover:bg-white/5">
+                    <span>Hayır, Casus Sıyrıldı</span>
+                    <span class="material-symbols-outlined text-sm">close</span>
+                </button>
+            </div>
+            
+            <button id="btn-close-expose-decision" class="text-on-surface-variant font-label-caps text-label-caps py-xs uppercase tracking-wider hover:text-primary transition-colors active:scale-95 mt-2">
+                İptal
+            </button>
+        </div>
+    </div>
+
+    <!-- Custom Dialog Modal (Alert / Confirm replacement) -->
+    <div id="custom-dialog-modal" class="fixed inset-0 z-[200] hidden items-center justify-center bg-black/85 backdrop-blur-md px-gutter animate-fade-in" style="display:none;">
+        <div class="glass-card w-full max-w-[340px] rounded-xl p-lg flex flex-col gap-md text-center border border-primary/20 shadow-2xl relative">
+            <div class="flex flex-col items-center gap-sm">
+                <span class="material-symbols-outlined text-[44px] text-primary animate-pulse" id="custom-dialog-icon">warning</span>
+                <h3 class="font-h2 text-h2 text-on-surface uppercase mt-xs" id="custom-dialog-title">BİLGİ</h3>
+                <p class="font-body text-sm text-on-surface-variant leading-relaxed mt-1" id="custom-dialog-message">
+                    İşlem mesajı buraya gelecek.
+                </p>
+            </div>
+            
+            <!-- Alert Actions -->
+            <div class="w-full mt-2 hidden" id="custom-dialog-alert-actions">
+                <button id="btn-custom-alert-ok" class="w-full py-3 bg-primary text-on-primary font-label-caps text-label-caps rounded-lg uppercase active:scale-95 transition-all shadow-md">
+                    Tamam
+                </button>
+            </div>
+            
+            <!-- Confirm Actions -->
+            <div class="flex gap-2.5 mt-2 hidden" id="custom-dialog-confirm-actions">
+                <button id="btn-custom-confirm-cancel" class="flex-1 py-3 border border-outline-variant text-on-surface font-label-caps text-label-caps rounded-lg uppercase active:scale-95 transition-all">
+                    İptal
+                </button>
+                <button id="btn-custom-confirm-ok" class="flex-1 py-3 bg-primary text-on-primary font-label-caps text-label-caps rounded-lg uppercase active:scale-95 transition-all shadow-md">
+                    Evet
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scenario Modal -->
+    <div id="scenario-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/85 backdrop-blur-md px-gutter animate-fade-in" style="display:none;">
+        <div class="glass-card w-full max-w-[420px] rounded-xl p-md flex flex-col gap-md max-h-[85vh] overflow-y-auto select-none border border-primary/20 shadow-2xl">
+            <div class="flex items-center justify-between border-b border-outline-variant/10 pb-xs">
+                <h3 class="font-h2 text-h2 text-primary uppercase flex items-center gap-xs">
+                    <span class="material-symbols-outlined text-lg">theater_comedy</span>
+                    <span>ÖRNEK SENARYO</span>
+                </h3>
+                <button id="btn-close-scenario" class="text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center p-1">
+                    <span class="material-symbols-outlined text-lg">close</span>
+                </button>
+            </div>
+            
+            <div class="space-y-md text-left font-body text-[13px] leading-relaxed text-on-surface-variant">
+                <p class="text-primary font-bold text-sm">Kategori: Modern İlişkiler | Kelime: Ghosting</p>
+                
+                <p class="text-xs opacity-70">
+                    Ahmet, Burcu, Can (Casus), Deniz, Elif ve Furkan toplanmışlar. Telefon sırayla elden ele geziyor:
+                </p>
+
+                <div class="space-y-sm border-l-2 border-primary/20 pl-sm my-sm">
+                    <div>
+                        <span class="font-semibold text-on-surface block text-[12px]">1. Sıra — Elif (Ekip):</span>
+                        <p class="italic text-secondary bg-surface-container/20 px-2 py-1 rounded">"Mavi tik oldu"</p>
+                    </div>
+                    <div>
+                        <span class="font-semibold text-error block text-[12px]">2. Sıra — Can (CASUS):</span>
+                        <p class="italic text-error font-semibold bg-error/5 border border-error/10 px-2 py-1 rounded">"Mesaj hakkı bitti" <span class="text-[10px] text-on-surface-variant/50 font-normal">(WhatsApp'ı düşündü, panikledi!)</span></p>
+                    </div>
+                    <div>
+                        <span class="font-semibold text-on-surface block text-[12px]">3. Sıra — Burcu (Ekip):</span>
+                        <p class="italic text-secondary bg-surface-container/20 px-2 py-1 rounded">"Sinyal koptu" <span class="text-[10px] text-on-surface-variant/50 font-normal">(Kurtarmaya çalışıyor)</span></p>
+                    </div>
+                    <div>
+                        <span class="font-semibold text-on-surface block text-[12px]">4. Sıra — Furkan (Ekip):</span>
+                        <p class="italic text-secondary bg-surface-container/20 px-2 py-1 rounded">"Aniden sır oldu"</p>
+                    </div>
+                    <div>
+                        <span class="font-semibold text-on-surface block text-[12px]">5. Sıra — Ahmet (Ekip):</span>
+                        <p class="italic text-secondary bg-surface-container/20 px-2 py-1 rounded">"Casper mübarek"</p>
+                    </div>
+                    <div>
+                        <span class="font-semibold text-on-surface block text-[12px]">6. Sıra — Deniz (Ekip):</span>
+                        <p class="italic text-secondary bg-surface-container/20 px-2 py-1 rounded">"İzi bile kalmadı"</p>
+                    </div>
+                </div>
+
+                <div class="bg-surface-container-high/40 border border-outline-variant/10 rounded-lg p-sm space-y-xs">
+                    <span class="font-bold text-on-surface uppercase tracking-wider text-[11px] block">🗣️ Masa Tartışması:</span>
+                    <p class="italic text-[12px]">
+                        "Mavi tikten sonra 'Mesaj hakkı bitti' yazan kimse resmen sıçramış! Yıl 2006 mı, kontör mü bitti? Casper ve görünmezlik ile ne alakası var? Kesin casus o!"
+                    </p>
+                    <p class="font-semibold text-[#10b981] text-[12px] mt-xs">
+                        🎯 Sonuç: Masa Can'ı ifşa eder. Can kelimeyi tahmin edemez. Ekip KAZANIR!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Oyun Script Modülü -->
+    <script type="module" src="./js/app.js"></script>
+
+</body>
+
+</html>

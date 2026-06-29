@@ -1,24 +1,50 @@
-/* VibeTabu PWA Service Worker (sw.js) */
+/* VibeParty PWA Service Worker (sw.js) */
 
-const CACHE_NAME = 'vibetabu-cache-v73';
+const CACHE_NAME = 'vibeparty-cache-v32';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
     './css/styles.css',
-    './js/app.js',
-    './js/state.js',
-    './js/ui.js',
-    './js/audio.js',
-    './data/words.json',
+    './css/fonts.css',
     './manifest.json',
     './icon-192.png',
     './icon-512.png',
-    './screenshot-mobile-1.png',
-    './screenshot-mobile-2.png',
-    './screenshot-mobile-3.png',
-    './screenshot-mobile-4.png',
-    './screenshot-mobile-5.png',
-    './screenshot-mobile-6.png'
+    './js/hub.js',
+    // Yerelleştirilmiş Font Dosyaları
+    './fonts/courierprime_0.woff',
+    './fonts/courierprime_1.woff',
+    './fonts/inter_0.woff',
+    './fonts/inter_1.woff',
+    './fonts/inter_2.woff',
+    './fonts/inter_3.woff',
+    './fonts/inter_4.woff',
+    './fonts/inter_5.woff',
+    './fonts/inter_6.woff',
+    './fonts/materialsymbols_0.woff',
+    './fonts/playfairdisplay_0.woff',
+    './fonts/playfairdisplay_1.woff',
+    './fonts/playfairdisplay_2.woff',
+    './fonts/playfairdisplay_3.woff',
+    './fonts/playfairdisplay_4.woff',
+    './fonts/playfairdisplay_5.woff',
+    './fonts/playfairdisplay_6.woff',
+    './fonts/playfairdisplay_7.woff',
+    // VibeTabu Dosyaları
+    './games/taboo/index.html',
+    './games/taboo/js/app.js',
+    './games/taboo/js/state.js',
+    './games/taboo/js/ui.js',
+    './games/taboo/js/audio.js',
+    './games/taboo/data/words.json',
+    './games/taboo/icon-192.png',
+    './games/taboo/icon-512.png',
+    // Vibe X Verses Dosyaları
+    './games/verses/index.html',
+    './games/verses/js/app.js',
+    './games/verses/js/state.js',
+    './games/verses/js/ui.js',
+    './games/verses/js/audio.js',
+    './games/verses/data/categories.json'
 ];
 
 // Service Worker Kurulumu ve Önbellekleme

@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html class="dark" lang="tr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport" />
+    <title>VibeTabu - Sadede Gel! 🎯</title>
+
+    <!-- Favicon & PWA Manifest -->
+    <link rel="icon" type="image/png" href="./icon-192.png" />
+    <link rel="apple-touch-icon" href="./icon-192.png" />
+    <link rel="manifest" href="../../manifest.json" />
+
+    <!-- Tailwind CSS ve Eklentileri -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <!-- Yerel Font & Material Simgeleri (Çevrimdışı Çalışma Desteği) -->
+    <link rel="stylesheet" href="../../css/fonts.css" />
+
+    <!-- Özel Tasarım Sistemimiz (Obsidian Glass) -->
+    <link rel="stylesheet" href="../../css/styles.css" />
+
+    <!-- Tailwind Yapılandırması (Görsel uyum için) -->
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        background: "#121420",
+                        surface: "#2d3047",
+                        primary: "#1b998b",
+                        secondary: "#ff9b71",
+                        error: "#ed217c",
+                        warning: "#fffd82",
+                        "on-surface-variant": "#a6abc0"
+                    },
+                    spacing: {
+                        "container-padding": "24px",
+                        "gutter": "16px",
+                        "safe-area-bottom": "32px"
+                    },
+                    fontFamily: {
+                        display: ["Inter"],
+                        body: ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-background text-on-surface antialiased h-screen w-screen overflow-hidden flex flex-col font-body relative">
+
+    <!-- Anlık Renkli Parlama Maskesi (Correct/Tabu basıldığında) -->
+    <div id="flash-overlay" class="view-overlay"></div>
+
+    <!-- 0. GÖRÜNÜM: BAŞLANGIÇ EKRANI (SPLASH) -->
+    <section id="view-splash"
+        class="game-view active-view flex flex-col w-full h-[100dvh] overflow-hidden items-center justify-between px-container-padding py-12">
+        <!-- Atmosferik Arka Plan Işıması -->
+        <div class="glow-bg"></div>
+
+        <!-- Üst Spacers -->
+        <div class="h-12 w-full relative z-10"></div>
+
+        <!-- Orta Logo Alanı -->
+        <div class="flex-1 flex flex-col items-center justify-center w-full mt-[-48px] relative z-10 animate-float">
+            <div class="relative flex flex-col items-center justify-center text-center">
+                <!-- Arka neon halka -->
+                <div
+                    class="absolute w-64 h-64 rounded-full bg-gradient-to-tr from-primary/10 to-secondary/15 blur-3xl opacity-80 animate-pulse-slow">
+                </div>
+
+                <!-- Uygulama İkonu -->
+                <div class="relative w-24 h-24 mb-6 flex items-center justify-center rounded-[24px] bg-[#2D3047]/45 border border-white/10 shadow-[0_8px_32px_rgba(27,153,139,0.15)] overflow-hidden z-10 select-none">
+                    <img src="./icon-192.png" alt="VibeTabu İkonu" class="w-[72px] h-[72px] object-contain rounded-[16px] pointer-events-none">
+                </div>
+
+                <!-- Logo -->
+                <h1
+                    class="font-display text-[48px] md:text-[64px] font-extralight tracking-[0.25em] text-white drop-shadow-[0_0_30px_rgba(184,196,255,0.4)] select-none">
+                    VİBE<span class="text-primary font-light">TABU</span>
+                </h1>
+                <p class="font-body text-xs text-white/40 tracking-[0.15em] mt-5 uppercase">Kelime Oyunu</p>
+                <p class="font-body text-[10px] text-white/25 tracking-[0.2em] mt-1.5 uppercase">vacbir</p>
+
+                <!-- Kelime Sayacı Rozeti -->
+                <div id="word-count-badge"
+                    class="mt-8 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-[10px] tracking-[0.15em] uppercase font-medium shadow-[0_0_12px_rgba(184,196,255,0.1)] opacity-0 transition-opacity duration-500 mx-auto w-fit">
+                    <span id="splash-word-count">0</span> Kelime Yüklendi
+                </div>
+            </div>
+        </div>
+
+        <!-- Alt Butonlar -->
+        <div class="w-full flex flex-col items-center gap-3 pb-8 relative z-10">
+            <!-- Kaldığın Yerden Devam Et (Gizli Başlar, Kayıt Varsa Görünür) -->
+            <button id="btn-splash-resume"
+                class="hidden w-[280px] py-4 rounded-full items-center justify-center gap-3 text-white font-medium text-lg tracking-wider active:scale-95 transition-all bg-secondary/10 border border-secondary/20 hover:bg-secondary/15 shadow-[0_4px_15px_rgba(255,155,113,0.15)]">
+                <span>Devam Et</span>
+                <span class="material-symbols-outlined text-secondary">restore</span>
+            </button>
+            <button id="btn-splash-start"
+                class="glass-btn-primary w-[280px] py-4 rounded-full flex items-center justify-center gap-3 text-white font-medium text-lg tracking-wider active:scale-95 transition-all">
+                <span>Oyuna Başla</span>
+                <span class="material-symbols-outlined text-primary">play_circle</span>
+            </button>
+            <button id="btn-splash-rules"
+                class="border border-white/10 hover:border-white/20 w-[280px] py-3.5 rounded-full flex items-center justify-center gap-3 text-white/70 hover:text-white font-light text-sm tracking-wider active:scale-95 transition-all bg-black/20 backdrop-blur-md">
+                <span>Nasıl Oynanır?</span>
+                <span class="material-symbols-outlined text-white/50 text-base">help</span>
+            </button>
+            <a href="../../index.html"
+                class="border border-white/5 hover:border-white/10 w-[280px] py-3.5 rounded-full flex items-center justify-center gap-3 text-white/40 hover:text-white/60 font-light text-sm tracking-wider active:scale-95 transition-all bg-white/[0.01] backdrop-blur-md">
+                <span>Ana Menüye Dön</span>
+                <span class="material-symbols-outlined text-white/30 text-base">home</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- 1. GÖRÜNÜM: OYUN KURULUMU (ADIM 1) -->
+    <section id="view-setup" class="game-view flex flex-col w-full h-[100dvh] overflow-hidden">
+        <header
+            class="bg-black/80 backdrop-blur-md absolute top-0 w-full z-50 border-b border-white/5 flex items-center justify-center px-container-padding h-16">
+            <button id="btn-setup-home"
+                class="text-primary hover:opacity-80 transition-opacity active:scale-95 flex items-center justify-center absolute left-4">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </button>
+            <h1 class="font-display text-[20px] text-primary uppercase tracking-[0.25em] font-light">VİBETABU</h1>
+        </header>
+
+        <main
+            class="flex-1 pt-20 pb-32 px-container-padding overflow-y-auto w-full max-w-[600px] mx-auto flex flex-col gap-10">
+            <!-- Takımlar Bölümü -->
+            <div class="flex flex-col gap-5 mt-4">
+                <h2 class="font-label-caps text-label-caps text-outline uppercase tracking-widest text-center">Takım
+                    İsimleri</h2>
+
+                <div class="glass-panel rounded-2xl p-6 flex flex-col gap-5 relative overflow-hidden">
+                    <div id="team-inputs-container" class="flex flex-col gap-5">
+                        <!-- js/ui.js tarafından dinamik doldurulur -->
+                    </div>
+
+                    <!-- Takım Ekle Butonu -->
+                    <button id="btn-add-team" type="button"
+                        class="mt-2 py-3 border border-dashed border-white/10 rounded-lg flex items-center justify-center gap-2 text-white/50 hover:text-white hover:border-white/20 active:scale-95 transition-all text-sm font-light">
+                        <span class="material-symbols-outlined text-sm">add</span> Yeni Takım Ekle
+                    </button>
+                </div>
+            </div>
+
+            <!-- Oyun Ayarları Bölümü -->
+            <div class="flex flex-col gap-5">
+                <h2 class="font-label-caps text-label-caps text-outline uppercase tracking-widest text-center">Kurallar
+                    & Ayarlar</h2>
+
+                <div class="glass-panel rounded-2xl p-6 flex flex-col gap-6">
+                    <!-- Süre Ayarı -->
+                    <div class="flex flex-col gap-3">
+                        <span class="font-body text-sm text-white/70 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary text-base">timer</span> Süre (Saniye)
+                        </span>
+                        <div id="time-pills-container" class="flex gap-2">
+                            <button
+                                class="option-pill flex-1 py-3 rounded-lg font-body text-sm active:scale-95">60</button>
+                            <button
+                                class="option-pill active flex-1 py-3 rounded-lg font-body text-sm active:scale-95">90</button>
+                            <button
+                                class="option-pill flex-1 py-3 rounded-lg font-body text-sm active:scale-95">120</button>
+                        </div>
+                    </div>
+
+                    <!-- Pas Limit Ayarı -->
+                    <div class="h-px bg-white/5 w-full"></div>
+                    <div class="flex flex-col gap-3">
+                        <span class="font-body text-sm text-white/70 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary text-base">skip_next</span> Pas Hakkı
+                        </span>
+                        <div id="pass-pills-container" class="flex gap-2">
+                            <button
+                                class="option-pill flex-1 py-3 rounded-lg font-body text-sm active:scale-95">3</button>
+                            <button
+                                class="option-pill active flex-1 py-3 rounded-lg font-body text-sm active:scale-95">5</button>
+                            <button
+                                class="option-pill flex-1 py-3 rounded-lg font-body text-sm active:scale-95">Sınırsız</button>
+                        </div>
+                    </div>
+
+                    <!-- Hedef Puan Ayarı -->
+                    <div class="h-px bg-white/5 w-full"></div>
+                    <div class="flex flex-col gap-3">
+                        <span class="font-body text-sm text-white/70 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary text-base">sports_score</span> Hedef
+                            Skor
+                        </span>
+                        <div id="score-pills-container" class="flex gap-2">
+                            <button
+                                class="option-pill flex-1 py-3 rounded-lg font-body text-sm active:scale-95">30</button>
+                            <button
+                                class="option-pill active flex-1 py-3 rounded-lg font-body text-sm active:scale-95">50</button>
+                            <button
+                                class="option-pill flex-1 py-3 rounded-lg font-body text-sm active:scale-95">100</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Sabit Alt Aksiyon Butonu -->
+        <div
+            class="absolute bottom-0 w-full px-container-padding py-6 pb-safe-area-bottom bg-gradient-to-t from-black via-black/90 to-transparent z-40 flex justify-center">
+            <button id="btn-setup-next"
+                class="primary-btn w-[280px] py-4 rounded-full flex items-center justify-center gap-2 text-white font-medium tracking-wide active:scale-95 transition-all">
+                <span>Sonraki Adım</span>
+                <span class="material-symbols-outlined text-primary">arrow_forward</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- 2. GÖRÜNÜM: OYUN KURULUMU (ADIM 2 - KATEGORİ VE ZORLUK SEÇİMİ) -->
+    <section id="view-setup-step2" class="game-view flex flex-col w-full h-[100dvh] overflow-hidden">
+        <header
+            class="bg-black/80 backdrop-blur-md absolute top-0 w-full z-50 border-b border-white/5 flex items-center justify-between px-container-padding h-16">
+            <button id="btn-setup-back"
+                class="text-primary hover:opacity-80 transition-opacity active:scale-95 flex items-center justify-center">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </button>
+            <h1 class="font-display text-[20px] text-primary uppercase tracking-[0.25em] font-light">KATEGORİLER</h1>
+            <div class="w-6"></div> <!-- Boş spacer -->
+        </header>
+
+        <main
+            class="flex-1 pt-20 pb-32 px-container-padding overflow-y-auto w-full max-w-[600px] mx-auto flex flex-col gap-8">
+            <!-- Kategoriler Listesi -->
+            <div class="flex flex-col gap-4 mt-4">
+                <h2 class="font-label-caps text-label-caps text-outline uppercase tracking-widest text-center">Kelime
+                    Paketleri</h2>
+                <div id="categories-container" class="grid grid-cols-2 gap-3">
+                    <!-- js/ui.js tarafından yüklenen kategoriler listelenir -->
+                </div>
+            </div>
+
+            <!-- Zorluk Derecesi -->
+            <div class="flex flex-col gap-4 mt-2">
+                <h2 class="font-label-caps text-label-caps text-outline uppercase tracking-widest text-center">Kelime
+                    Zorluğu</h2>
+                <div id="difficulty-pills-container" class="flex gap-2">
+                    <button class="option-pill flex-1 py-3 rounded-lg font-body text-sm active:scale-95"
+                        data-difficulty="K">Kolay</button>
+                    <button class="option-pill flex-1 py-3 rounded-lg font-body text-sm active:scale-95"
+                        data-difficulty="O">Orta</button>
+                    <button class="option-pill flex-1 py-3 rounded-lg font-body text-sm active:scale-95"
+                        data-difficulty="Z">Zor</button>
+                    <button class="option-pill active flex-1 py-3 rounded-lg font-body text-sm active:scale-95"
+                        data-difficulty="ALL">Karışık</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Sabit Alt Aksiyon Butonu -->
+        <div
+            class="absolute bottom-0 w-full px-container-padding py-6 pb-safe-area-bottom bg-gradient-to-t from-black via-black/90 to-transparent z-40 flex justify-center">
+            <button id="btn-start-game" disabled
+                class="primary-btn w-[280px] py-4 rounded-full flex items-center justify-center gap-2 text-white font-medium tracking-wide transition-all opacity-40 cursor-not-allowed">
+                <span>Oyunu Başlat</span>
+                <span class="material-symbols-outlined text-primary">play_arrow</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- 3. GÖRÜNÜM: TURA HAZIR OL EKRANI -->
+    <section id="view-round-ready"
+        class="game-view flex flex-col w-full h-[100dvh] overflow-hidden items-center justify-center">
+        <div class="ambient-glow animate-pulse-slow"></div>
+
+        <main
+            class="relative z-10 w-full max-w-[600px] px-container-padding flex flex-col items-center justify-center h-full text-center">
+            <div class="flex flex-col items-center space-y-6 w-full animate-float">
+                <h1 class="font-display text-[30px] md:text-[40px] text-primary mb-2 font-light">
+                    Sıra <span id="ready-team-name" class="font-medium text-white">...</span> takımında!
+                </h1>
+                <p
+                    class="font-body text-sm text-on-surface-variant max-w-[280px] md:max-w-[400px] mx-auto mb-6 font-light">
+                    Cihazı anlatacak kişiye teslim edin ve diğer oyunculara kartları göstermeyin.
+                </p>
+
+                <!-- Tur İddiası Paneli -->
+                <div class="glass-panel rounded-2xl p-5 flex flex-col gap-4 shadow-lg border border-primary/10 relative overflow-hidden w-full max-w-[340px] mb-4">
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-primary text-3xl animate-bounce">casino</span>
+                        <div class="flex flex-col gap-0.5 text-left">
+                            <h4 class="font-label-caps text-[10px] text-primary tracking-wider uppercase font-semibold">Tur İddiası 🎰</h4>
+                            <p id="ready-bet-text" class="font-body text-xs text-white/80 font-light leading-relaxed">
+                                Bu tur en az ... DOĞRU yapabilir misiniz?
+                            </p>
+                        </div>
+                    </div>
+                    <!-- İddia Seçim Butonları -->
+                    <div class="grid grid-cols-2 gap-3 mt-1 relative z-10">
+                        <button id="btn-ready-bet-accept" class="option-pill py-3 rounded-xl font-body text-xs active:scale-95 transition-all flex items-center justify-center gap-1.5 border-primary/20">
+                            <span class="material-symbols-outlined text-sm">check_circle</span> İddiaya Gir (+1 / -1)
+                        </button>
+                        <button id="btn-ready-bet-decline" class="option-pill active py-3 rounded-xl font-body text-xs active:scale-95 transition-all flex items-center justify-center gap-1.5 border-primary/20">
+                            <span class="material-symbols-outlined text-sm">cancel</span> Normal Oyna
+                        </button>
+                    </div>
+                </div>
+
+                <div class="pb-4">
+                    <button id="btn-start-turn" class="glass-btn-primary rounded-full px-12 py-6 flex flex-col items-center justify-center space-y-2 group">
+                        <span
+                            class="material-symbols-outlined text-[48px] text-primary group-hover:scale-110 transition-transform duration-300"
+                            style="font-variation-settings: 'FILL' 1;">
+                            play_circle
+                        </span>
+                        <span class="font-label-caps text-xs text-primary tracking-wide uppercase">
+                            Süreyi Başlat
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </section>
+
+    <!-- 4. GÖRÜNÜM: AKTİF OYUN EKRANI -->
+    <section id="view-playing" class="game-view flex flex-col w-full h-[100dvh] overflow-hidden bg-background">
+        <!-- Atmosferik Arka Plan Işıması -->
+        <div class="glow-bg opacity-80"></div>
+        <div class="ambient-glow opacity-50 animate-pulse-slow"></div>
+
+        <!-- İlerleme Çubuğu (Tepede) -->
+        <div class="w-full h-1 bg-white/5 absolute top-0 left-0 z-50">
+            <div id="timer-progress-bar"
+                class="h-full bg-primary timer-glow text-primary transition-all duration-1000 ease-linear"
+                style="width: 100%;"></div>
+        </div>
+
+        <main
+            class="flex-1 flex flex-col items-center justify-between w-full max-w-[600px] mx-auto px-container-padding pt-6 pb-safe-area-bottom relative z-10">
+            <!-- Header Alanı -->
+            <header class="w-full flex items-center justify-between mt-4">
+                <div class="flex flex-col text-left">
+                    <span id="playing-team-name"
+                        class="font-label-caps text-label-caps text-outline uppercase tracking-widest">TAKIM 1</span>
+                    <span id="playing-round-text" class="font-body text-sm text-primary mt-1 font-light">1. Tur</span>
+                    <span id="playing-bet-badge" class="hidden mt-1.5 px-2 py-0.5 rounded-full border border-secondary/20 bg-secondary/5 text-secondary text-[9px] tracking-wider uppercase font-medium shadow-[0_0_8px_rgba(255,155,113,0.1)] w-fit items-center gap-1">
+                        🎰 HEDEF: <span id="playing-bet-target">5 DOĞRU</span>
+                    </span>
+                </div>
+
+                <!-- Dairesel Sayaç (Tıklandığında Duraklatır) -->
+                <div id="timer-click-area"
+                    class="relative flex items-center justify-center w-16 h-16 rounded-full liquid-glass inner-glow select-none cursor-pointer active:scale-95 transition-transform group">
+                    <svg class="absolute inset-0 w-full h-full transform -rotate-90" viewbox="0 0 64 64">
+                        <circle cx="32" cy="32" fill="none" r="28" stroke="rgba(255,255,255,0.05)" stroke-width="2">
+                        </circle>
+                        <circle id="timer-svg-circle" class="text-primary transition-all duration-1000" cx="32" cy="32"
+                            fill="none" r="28" stroke="currentColor" stroke-dasharray="175.93" stroke-dashoffset="0"
+                            stroke-width="2"></circle>
+                    </svg>
+                    <span id="timer-text" class="font-body text-xl text-on-surface z-10 relative font-medium">90</span>
+                    <!-- Üzerine gelindiğinde/basıldığında pause ikonu göster -->
+                    <div
+                        class="absolute inset-0 bg-black/60 rounded-full opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity z-20">
+                        <span class="material-symbols-outlined text-primary text-xl">pause</span>
+                    </div>
+                </div>
+
+                <div class="flex flex-col items-end">
+                    <span class="font-label-caps text-label-caps text-outline uppercase tracking-widest">SKORLAR</span>
+                    <span id="playing-scoreboard-text" class="font-body text-sm text-white mt-1 font-light">0 - 0</span>
+                </div>
+            </header>
+
+            <!-- Kelime Kartı Konteyneri -->
+            <div id="active-card-container"
+                class="card-container w-full liquid-glass rounded-3xl p-8 flex flex-col items-center justify-center pulse-border inner-glow mt-8 mb-auto relative overflow-hidden">
+                <!-- js/ui.js tarafından kart kelimeleri doldurulur -->
+            </div>
+
+            <!-- Alt Kontrol Butonları -->
+            <div class="w-full grid grid-cols-3 gap-4 mt-8">
+                <!-- TABU -->
+                <button id="btn-tabu"
+                    class="flex flex-col items-center justify-center space-y-2 py-4 rounded-2xl bg-error/5 border border-error/20 text-error hover:bg-error/15 hover:border-error/40 transition-all active:scale-95 shadow-[0_4px_15px_rgba(237,33,124,0.1)]">
+                    <span class="material-symbols-outlined">close</span>
+                    <span class="font-label-caps text-[10px] tracking-widest font-semibold">TABU!</span>
+                </button>
+                <!-- PAS -->
+                <button id="btn-pass"
+                    class="flex flex-col items-center justify-center space-y-2 py-4 rounded-2xl bg-secondary/5 border border-secondary/20 text-secondary hover:bg-secondary/15 hover:border-secondary/40 transition-all active:scale-95 shadow-[0_4px_15px_rgba(255,155,113,0.1)]">
+                    <span class="material-symbols-outlined">fast_forward</span>
+                    <span class="font-label-caps text-[10px] tracking-widest font-semibold pass-count-label">PAS</span>
+                </button>
+                <!-- DOĞRU -->
+                <button id="btn-correct"
+                    class="flex flex-col items-center justify-center space-y-2 py-4 rounded-2xl bg-primary/5 border border-primary/20 text-primary hover:bg-primary/15 hover:border-primary/40 transition-all active:scale-95 shadow-[0_4px_15px_rgba(27,153,139,0.1)]">
+                    <span class="material-symbols-outlined">check</span>
+                    <span class="font-label-caps text-[10px] tracking-widest font-semibold">DOĞRU</span>
+                </button>
+            </div>
+        </main>
+
+        <!-- Duraklatma Paneli (Overlay) -->
+        <div id="pause-overlay"
+            class="absolute inset-0 bg-background/80 backdrop-blur-md z-50 hidden flex-col items-center justify-center gap-8">
+            <div class="relative flex flex-col items-center justify-center text-center">
+                <div class="absolute w-48 h-48 rounded-full bg-primary/15 blur-3xl opacity-80 animate-pulse-slow"></div>
+                <span
+                    class="material-symbols-outlined text-[64px] text-primary relative z-10 mb-4 animate-pulse">pause_circle</span>
+                <h2 class="font-display text-3xl text-white font-light tracking-wide relative z-10">Oyun Duraklatıldı
+                </h2>
+                <p class="font-body text-sm text-white/40 mt-2">Süre donduruldu. Devam etmek için hazır mısınız?</p>
+            </div>
+
+            <div class="flex flex-col gap-4 w-[280px] mt-4 relative z-10">
+                <button id="btn-pause-resume"
+                    class="glass-btn-primary py-4 rounded-full flex items-center justify-center gap-2 text-white font-medium text-base tracking-wider active:scale-95 transition-all shadow-[0_4px_15px_rgba(27,153,139,0.15)] hover:bg-primary/10 hover:border-primary/40">
+                    <span class="material-symbols-outlined text-sm">play_arrow</span>
+                    <span>Devam Et</span>
+                </button>
+                <button id="btn-pause-home"
+                    class="border border-white/10 hover:border-white/20 py-4 rounded-full flex items-center justify-center gap-2 text-white/60 hover:text-white font-medium text-base tracking-wider active:scale-95 transition-all">
+                    <span class="material-symbols-outlined text-sm">logout</span>
+                    <span>Tabu Menüsüne Dön</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. GÖRÜNÜM: TUR SONU İNCELEME EKRANI -->
+    <section id="view-round-over" class="game-view flex flex-col w-full h-[100dvh] overflow-hidden bg-background">
+        <!-- Atmosferik Arka Plan Işıması -->
+        <div class="glow-bg opacity-80"></div>
+        <div class="ambient-glow opacity-50 animate-pulse-slow"></div>
+
+        <header
+            class="bg-black/80 backdrop-blur-md absolute top-0 w-full z-50 border-b border-white/5 flex items-center justify-center px-container-padding h-16">
+            <h1 class="font-display text-[18px] text-white uppercase tracking-[0.2em] font-light">TUR SONU İNCELEME</h1>
+        </header>
+
+        <main
+            class="flex-1 pt-16 pb-28 px-container-padding overflow-y-auto w-full max-w-[600px] mx-auto flex flex-col gap-4">
+            <!-- Tur Puanı Özeti -->
+            <div class="text-center my-2">
+                <h2 id="review-team-name"
+                    class="font-label-caps text-label-caps text-white/50 tracking-[0.2em] uppercase mb-1">...</h2>
+                <div id="review-score-change" class="font-display text-3xl text-primary font-light">+0 Puan</div>
+            </div>
+
+            <!-- Oynanan Kelimeler Kart Görünümü -->
+            <div class="flex-1 flex flex-col justify-center items-center w-full gap-4">
+                <h3 class="font-label-caps text-[10px] text-white/40 tracking-wider text-center uppercase">Kararlar ve
+                    Düzeltmeler</h3>
+
+                <!-- Kart Konteyneri -->
+                <div id="review-card-container" class="w-full">
+                    <!-- js/ui.js tarafından dinamik olarak tek bir kart render edilecek -->
+                </div>
+
+                <!-- Navigasyon Kontrolleri -->
+                <div id="review-nav-controls"
+                    class="w-full flex items-center justify-between px-4 max-w-[360px] mx-auto hidden">
+                    <button id="btn-review-prev"
+                        class="glass-btn-icon w-12 h-12 rounded-full flex items-center justify-center backdrop-blur-md active:scale-95 transition-transform"
+                        type="button">
+                        <span class="material-symbols-outlined">chevron_left</span>
+                    </button>
+                    <span id="review-card-indicator"
+                        class="font-body text-sm text-white/40 tracking-widest font-light">1 / 1</span>
+                    <button id="btn-review-next"
+                        class="glass-btn-icon w-12 h-12 rounded-full flex items-center justify-center backdrop-blur-md active:scale-95 transition-transform"
+                        type="button">
+                        <span class="material-symbols-outlined">chevron_right</span>
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Sabit Alt Aksiyon Butonu -->
+        <div
+            class="absolute bottom-0 w-full px-container-padding py-6 pb-safe-area-bottom bg-gradient-to-t from-black via-black/90 to-transparent z-40 flex justify-center">
+            <button id="btn-confirm-review"
+                class="primary-btn w-[280px] py-4 rounded-full flex items-center justify-center gap-2 text-white font-medium tracking-wide active:scale-95 transition-all shadow-[0_4px_15px_rgba(27,153,139,0.15)] hover:bg-primary/5 hover:border-primary/40">
+                <span>Skorları Onayla</span>
+                <span class="material-symbols-outlined text-primary">done_all</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- 6. GÖRÜNÜM: SKOR TABLOSU EKRANI -->
+    <section id="view-scoreboard" class="game-view flex flex-col w-full h-[100dvh] overflow-hidden bg-background">
+        <!-- Atmosferik Arka Plan Işıması -->
+        <div class="glow-bg opacity-80"></div>
+        <div class="ambient-glow opacity-50 animate-pulse-slow"></div>
+
+        <header
+            class="bg-black/80 backdrop-blur-md absolute top-0 w-full z-50 border-b border-white/5 flex items-center justify-center px-container-padding h-16">
+            <h1 class="font-display text-[18px] text-primary uppercase tracking-[0.2em] font-light">SKOR TABLOSU</h1>
+        </header>
+
+        <main
+            class="flex-1 pt-20 pb-32 px-container-padding overflow-y-auto w-full max-w-[600px] mx-auto flex flex-col gap-6">
+            <!-- Genel Puan Durumu Listesi -->
+            <div class="flex flex-col gap-4 mt-4 relative z-10">
+                <h2 class="font-label-caps text-[10px] text-white/40 tracking-wider text-center uppercase">Genel Puan Durumu</h2>
+                <div id="scoreboard-list-container" class="flex flex-col gap-4">
+                    <!-- js/ui.js tarafından takımların puanları listelenir -->
+                </div>
+            </div>
+
+            <!-- Yeni Görsel Katmanlar (Boşluğu Doldurmak ve Heyecan Katmak İçin) -->
+            <div class="flex flex-col gap-4 mt-2 relative z-10">
+                <!-- Hedef Skora İlerleme Bölümü -->
+                <div class="glass-panel rounded-2xl p-5 flex flex-col gap-3 shadow-lg">
+                    <div class="flex justify-between items-center text-xs">
+                        <span class="text-white/40 flex items-center gap-1.5">
+                            <span class="material-symbols-outlined text-sm text-secondary">sports_score</span>
+                            Hedef Skor: <span id="scoreboard-target-label" class="text-white font-medium">50</span>
+                        </span>
+                        <span id="scoreboard-leader-dist" class="text-primary text-[10px] md:text-xs font-medium tracking-wide">...</span>
+                    </div>
+                    <!-- İlerleme Çubukları -->
+                    <div id="scoreboard-progress-container" class="flex flex-col gap-3.5 mt-1">
+                        <!-- js/ui.js tarafından dinamik doldurulur -->
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- Sabit Alt Aksiyon Butonu -->
+        <div
+            class="absolute bottom-0 w-full px-container-padding py-6 pb-safe-area-bottom bg-gradient-to-t from-black via-black/90 to-transparent z-40 flex justify-center">
+            <button id="btn-scoreboard-next"
+                class="primary-btn w-[280px] py-4 rounded-full flex items-center justify-center gap-2 text-white font-medium tracking-wide active:scale-95 transition-all shadow-[0_4px_15px_rgba(27,153,139,0.15)] hover:bg-primary/5 hover:border-primary/40">
+                <span>Sonraki Tura Geç</span>
+                <span class="material-symbols-outlined text-primary">arrow_forward</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- 7. GÖRÜNÜM: OYUN BİTTİ / ŞAMPİYON EKRANI -->
+    <section id="view-game-over"
+        class="game-view flex flex-col w-full h-[100dvh] overflow-hidden items-center justify-center bg-black">
+        <main
+            class="w-full max-w-[600px] px-container-padding py-10 flex flex-col items-center relative z-10 h-full justify-center">
+            <!-- Kupa Simgesi -->
+            <div class="mb-6 relative flex items-center justify-center">
+                <div class="subtle-glow"></div>
+                <div
+                    class="w-20 h-20 rounded-full flex items-center justify-center relative z-10 border border-white/5 bg-black/40 backdrop-blur-md">
+                    <span class="material-symbols-outlined text-4xl text-white/90"
+                        style="font-variation-settings: 'FILL' 0, 'wght' 200;">
+                        emoji_events
+                    </span>
+                </div>
+            </div>
+
+            <!-- Tebrik Başlığı -->
+            <div class="text-center mb-8">
+                <h2 class="font-label-caps text-label-caps text-white/50 tracking-[0.2em] uppercase mb-2">Şampiyon</h2>
+                <h1 id="winner-team-title"
+                    class="font-display text-3xl md:text-5xl text-white tracking-tight font-light">
+                    ... Takımı
+                </h1>
+            </div>
+
+            <!-- Detaylı Takım Sonuç Kartları -->
+            <div id="winner-stats-container" class="w-full grid grid-cols-2 gap-4 mb-10">
+                <!-- js/ui.js tarafından doldurulur -->
+            </div>
+
+            <!-- Alt Butonlar -->
+            <div class="w-full flex flex-col gap-3 mt-auto">
+                <button id="btn-game-over-replay"
+                    class="w-full py-4 px-6 rounded-full glass-btn-primary text-white font-body text-sm hover:bg-white/10 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+                    <span class="material-symbols-outlined text-[18px]">refresh</span>
+                    Yeniden Oyna
+                </button>
+                <button id="btn-game-over-home"
+                    class="w-full py-4 px-6 rounded-full border border-white/10 text-white/60 font-body text-sm hover:text-white hover:border-white/30 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+                    <span class="material-symbols-outlined text-[18px]">home</span>
+                    Ana Menüye Dön
+                </button>
+            </div>
+        </main>
+    </section>
+
+    <!-- 8. GÖRÜNÜM: OYUN KURALLARI EKRANI (YENİ GÖRÜNÜM) -->
+    <section id="view-rules" class="game-view flex flex-col w-full h-[100dvh] overflow-hidden bg-background">
+        <!-- Atmosferik Arka Plan Işıması -->
+        <div class="glow-bg opacity-80"></div>
+        <div class="ambient-glow opacity-50 animate-pulse-slow"></div>
+
+        <header
+            class="bg-background/80 backdrop-blur-md absolute top-0 w-full z-50 border-b border-white/5 flex items-center justify-center px-container-padding h-16">
+            <button id="btn-rules-back"
+                class="text-primary hover:opacity-80 transition-opacity active:scale-95 flex items-center justify-center absolute left-4">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </button>
+            <h1 class="font-display text-[20px] text-primary uppercase tracking-[0.25em] font-light">KURALLAR</h1>
+        </header>
+
+        <main class="flex-1 pt-20 pb-12 px-container-padding overflow-y-auto w-full max-w-[600px] mx-auto flex flex-col gap-6">
+            <div class="flex flex-col gap-6 relative z-10 mt-4">
+                <!-- Temel Hedef Kartı -->
+                <div class="glass-panel rounded-2xl p-6 flex flex-col gap-4 shadow-lg border border-white/5">
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-primary text-2xl">ads_click</span>
+                        <h2 class="font-display text-lg text-white font-light tracking-wide">Oyunun Amacı</h2>
+                    </div>
+                    <p class="font-body text-sm text-white/70 font-light leading-relaxed">
+                        Takım arkadaşlarına, ekranın en üstündeki hedef kelimeyi, altındaki <span class="text-error font-medium">5 yasaklı kelimeyi</span> veya hedef kelimenin herhangi bir parçasını kullanmadan süreniz dahilinde anlatmaktır.
+                    </p>
+                </div>
+
+                <!-- Puanlama Kuralları Kartı -->
+                <div class="glass-panel rounded-2xl p-6 flex flex-col gap-5 shadow-lg border border-white/5">
+                    <div class="flex items-center gap-3 mb-1">
+                        <span class="material-symbols-outlined text-primary text-2xl">military_tech</span>
+                        <h2 class="font-display text-lg text-white font-light tracking-wide">Puanlama Sistemi</h2>
+                    </div>
+                    
+                    <div class="flex flex-col gap-4">
+                        <div class="flex gap-4 items-start">
+                            <span class="material-symbols-outlined text-primary text-xl mt-0.5" style="font-variation-settings: 'FILL' 1;">add_circle</span>
+                            <div class="flex flex-col gap-0.5">
+                                <span class="font-body text-sm text-white font-medium">Doğru (+1 Puan)</span>
+                                <span class="font-body text-xs text-white/50 font-light">Kelime başarıyla tahmin edildiğinde basılır. Takımınıza 1 puan kazandırır.</span>
+                            </div>
+                        </div>
+                        
+                        <div class="h-px bg-white/5 w-full"></div>
+                        
+                        <div class="flex gap-4 items-start">
+                            <span class="material-symbols-outlined text-error text-xl mt-0.5" style="font-variation-settings: 'FILL' 1;">remove_circle</span>
+                            <div class="flex flex-col gap-0.5">
+                                <span class="font-body text-sm text-white font-medium">Tabu (-2 Puan)</span>
+                                <span class="font-body text-xs text-white/50 font-light">Yasaklı kelimelerden biri söylendiğinde basılır. Takımınızdan 2 puan düşer.</span>
+                            </div>
+                        </div>
+                        
+                        <div class="h-px bg-white/5 w-full"></div>
+                        
+                        <div class="flex gap-4 items-start">
+                            <span class="material-symbols-outlined text-white/40 text-xl mt-0.5" style="font-variation-settings: 'FILL' 1;">fast_forward</span>
+                            <div class="flex flex-col gap-0.5">
+                                <span class="font-body text-sm text-white font-medium">Pas (0 Puan)</span>
+                                <span class="font-body text-xs text-white/50 font-light">Anlatılamayan kelimeleri geçmek için kullanılır. Puanınızı etkilemez, ancak oyun ayarlarındaki pas limiti kadar kullanılabilir.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Adil Bitiş Sistemi Kartı -->
+                <div class="glass-panel rounded-2xl p-6 flex flex-col gap-4 shadow-lg border border-white/5">
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-primary text-2xl">balance</span>
+                        <h2 class="font-display text-lg text-white font-light tracking-wide">Adil Bitiş Sistemi ⚖️</h2>
+                    </div>
+                    <div class="font-body text-xs text-white/70 font-light leading-relaxed">
+                        <p class="mb-2">
+                            Oyunda hedef skora (örneğin 50 puana) ulaşıldığında oyun <strong>anında durup bitmez</strong>. Her takıma eşit sayıda oynama hakkı tanımak için aktif turun bitmesi beklenir.
+                        </p>
+                        <div class="pl-3 border-l-2 border-primary/30 mt-3 text-[11px] leading-normal text-white/60 flex flex-col gap-2">
+                            <span class="text-primary font-medium tracking-wide block">Örnek Senaryo (A ve B Takımları):</span>
+                            <span>A Takımı oyuna ilk başlayan takımdır, B Takımı ise ikinci sırada oynar.</span>
+                            <span>
+                                <strong>1. Senaryo (A Takımı 50'yi aşarsa):</strong><br>
+                                A Takımı 3. turda anlatımını yapıp 52 puan yapıyor. Oyun hemen bitmez! Çünkü B Takımı o tur henüz oynamadı. B Takımına da tur sonuna kadar oynama şansı verilir. Eğer B Takımı kendi turunda atağa kalkıp 53 puan yaparsa şampiyon B Takımı olur. Eğer B Takımı 52'yi geçemezse A Takımı kazanır.
+                            </span>
+                            <span>
+                                <strong>2. Senaryo (B Takımı 50'yi aşarsa):</strong><br>
+                                A Takımı 3. turda oynuyor ve barajı geçemiyor. Arkasından B Takımı oynuyor ve 50 puanı geçiyor. Bu durumda o tur tamamlandığı ve iki takım da eşit sayıda el oynadığı için oyun anında biter ve B Takımı şampiyon olur.
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tur Sonu İnceleme Kartı -->
+                <div class="glass-panel rounded-2xl p-6 flex flex-col gap-4 shadow-lg border border-white/5">
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-primary text-2xl">edit_square</span>
+                        <h2 class="font-display text-lg text-white font-light tracking-wide">Karar Düzeltme & İtiraz</h2>
+                    </div>
+                    <p class="font-body text-sm text-white/70 font-light leading-relaxed">
+                        Tur bittiğinde oynadığınız tüm kartları inceleyebileceğiniz bir ekran açılır. Yanlışlıkla bastığınız kararları (örneğin aslında Tabu olan ama Doğru basılan durumları) kartları kaydırarak düzeltebilirsiniz. Skorlar anlık olarak yeniden hesaplanır.
+                    </p>
+                </div>
+            </div>
+        </main>
+    </section>
+
+    <!-- Ana Uygulama Modülü -->
+    <script type="module" src="./js/app.js"></script>
+</body>
+
+</html>

@@ -1,7 +1,7 @@
 {
-  "name": "VibeTabu - Premium Tabu Oyunu",
-  "short_name": "VibeTabu",
-  "description": "Mobil öncelikli, siber-minimalist tasarımlı çevrimdışı Tabu oyunu.",
+  "name": "VibeParty - Grup Oyunları Portalı",
+  "short_name": "VibeParty",
+  "description": "Mobil öncelikli, neon tasarımlı çevrimdışı grup parti oyunları portalı.",
   "id": "/",
   "start_url": "index.html",
   "scope": "/",

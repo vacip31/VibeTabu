@@ -41,7 +41,27 @@ export const views = {
     rules: document.getElementById('view-rules')
 };
 
-let currentActiveView = null;
+let isHandlingPopstate = false;
+
+// Sayfa ilk yüklendiğinde geçmişe splash durumunu yaz
+if (typeof window !== 'undefined' && window.history && window.history.replaceState) {
+    window.history.replaceState({ view: 'splash' }, '');
+}
+
+if (typeof window !== 'undefined') {
+    window.addEventListener('popstate', (e) => {
+        const stateVal = e.state;
+        if (stateVal && stateVal.view && views[stateVal.view]) {
+            isHandlingPopstate = true;
+            showView(views[stateVal.view]);
+            isHandlingPopstate = false;
+        } else {
+            isHandlingPopstate = true;
+            showView(views.splash);
+            isHandlingPopstate = false;
+        }
+    });
+}
 
 /**
  * Belirtilen oyun ekranını yumuşak geçiş animasyonlarıyla gösterir.
@@ -53,6 +73,14 @@ export function showView(activeView) {
     
     if (!activeView || activeView === currentActiveView) return;
     
+    // Geçmiş durumunu güncelle (Eğer popstate tetiklemediyse push et)
+    if (!isHandlingPopstate && window.history && window.history.pushState) {
+        const viewKey = Object.keys(views).find(key => views[key] === activeView);
+        if (viewKey) {
+            window.history.pushState({ view: viewKey }, '');
+        }
+    }
+
     const oldView = currentActiveView;
     currentActiveView = activeView;
     
