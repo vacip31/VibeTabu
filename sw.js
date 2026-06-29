@@ -1,6 +1,6 @@
 /* VibeParty PWA Service Worker (sw.js) */
 
-const CACHE_NAME = 'vibeparty-cache-v40';
+const CACHE_NAME = 'vibeparty-cache-v41';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
@@ -55,7 +55,6 @@ self.addEventListener('install', event => {
     event.waitUntil(
         caches.open(CACHE_NAME)
             .then(cache => {
-                console.log('SW: Dosyalar önbelleğe alınıyor...');
                 return cache.addAll(ASSETS_TO_CACHE);
             })
             .then(() => self.skipWaiting())
@@ -69,7 +68,6 @@ self.addEventListener('activate', event => {
             return Promise.all(
                 cacheNames.map(cache => {
                     if (cache !== CACHE_NAME) {
-                        console.log('SW: Eski önbellek temizleniyor:', cache);
                         return caches.delete(cache);
                     }
                 })
