@@ -20,20 +20,20 @@
     <!-- Özel Tasarım Sistemimiz (Obsidian Glass) -->
     <link rel="stylesheet" href="./css/styles.css" />
 
-    <!-- Tailwind Yapılandırması (Yeni Portal Renk Paleti: 3B1F2B, DB162F, DBDFAC, 5F758E, 383961) -->
+    <!-- Tailwind Yapılandırması (Yeni Neon Turuncu & Neon Turkuaz Paleti) -->
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
                     colors: {
-                        background: "#3B1F2B",      /* Dark Eggplant / Burgundy */
-                        surface: "#383961",         /* Dark Indigo / Deep Violet */
-                        primary: "#DB162F",         /* Crimson / Bright Red */
-                        secondary: "#DBDFAC",       /* Sage / Creamy Yellow-Green */
-                        neutral: "#5F758E",         /* Slate / Steel Blue */
-                        error: "#DB162F",
-                        warning: "#DBDFAC",
+                        background: "#0b0f19",      /* Deep space dark blue */
+                        surface: "#161e31",         /* Dark obsidian blue */
+                        primary: "#00f2fe",         /* Neon Turquoise / Cyan */
+                        secondary: "#ff7a00",       /* Neon Orange */
+                        neutral: "#a6abc0",
+                        error: "#ff7a00",
+                        warning: "#00f2fe",
                         "on-surface-variant": "#a6abc0"
                     },
                     spacing: {
@@ -53,21 +53,23 @@
     <!-- Portal Özel Stil Aşımı -->
     <style>
         :root {
-            --color-background: #3B1F2B;
-            --color-surface: #383961;
-            --color-primary: #DB162F;
-            --color-neon-purple: #DBDFAC;
-            --color-soft-emerald: #5F758E;
-            --color-midnight-blue: #383961;
-            --color-coral-red: #DB162F;
-            --color-outline: rgba(255, 255, 255, 0.08);
+            --color-background: #0b0f19;
+            --color-surface: #161e31;
+            --color-primary: #00f2fe;
+            --color-neon-purple: #ff7a00;
+            --color-soft-emerald: #00f2fe;
+            --color-midnight-blue: #161e31;
+            --color-coral-red: #ff7a00;
+            --color-outline: rgba(255, 255, 255, 0.06);
         }
-        /* Portal İçin Atmosferik Arka Plan Işıması Renk Aşımı */
+        /* Portal İçin Çift Renkli Neon Atmosferik Işıma */
         .glow-bg {
-            background: radial-gradient(circle, rgba(219, 22, 47, 0.15) 0%, rgba(0,0,0,0) 70%) !important;
+            background: radial-gradient(circle at 35% 35%, rgba(0, 242, 254, 0.12) 0%, transparent 60%),
+                        radial-gradient(circle at 65% 65%, rgba(255, 122, 0, 0.12) 0%, transparent 60%) !important;
+            filter: blur(50px) !important;
         }
         .ambient-glow {
-            background: radial-gradient(circle, rgba(219, 22, 47, 0.1) 0%, rgba(0,0,0,0) 70%) !important;
+            background: radial-gradient(circle, rgba(0, 242, 254, 0.08) 0%, rgba(0,0,0,0) 70%) !important;
         }
     </style>
 </head>
@@ -86,12 +88,12 @@
         <div class="flex flex-col items-center mt-4 animate-float">
             <!-- PWA Logo Çerçevesi -->
             <div
-                class="relative w-20 h-20 mb-5 flex items-center justify-center rounded-[24px] bg-[#383961]/45 border border-white/10 shadow-[0_8px_32px_rgba(219,22,47,0.15)] overflow-hidden">
+                class="relative w-20 h-20 mb-5 flex items-center justify-center rounded-[24px] bg-[#161e31]/45 border border-white/10 shadow-[0_8px_32px_rgba(0,242,254,0.15)] overflow-hidden">
                 <img src="./icon-192.png" alt="VibeParty Logo" class="w-[60px] h-[60px] object-contain rounded-[14px]">
             </div>
 
             <h1
-                class="font-display text-[40px] font-extralight tracking-[0.25em] text-white drop-shadow-[0_0_30px_rgba(184,196,255,0.3)]">
+                class="font-display text-[40px] font-extralight tracking-[0.25em] text-white drop-shadow-[0_0_30px_rgba(0,242,254,0.25)]">
                 VİBE<span class="text-primary font-light">PARTY</span>
             </h1>
             <p class="font-body text-[10px] text-white/30 tracking-[0.2em] mt-3 uppercase">Grup Oyunları Portalı</p>
@@ -100,7 +102,7 @@
         <!-- Oyun Seçim Menüsü -->
         <div class="w-full flex flex-col gap-4 my-auto max-w-[360px] mx-auto">
 
-            <!-- VibeTabu Kartı (Aktif) -->
+            <!-- VibeTabu Kartı (Turkuaz Işıma) -->
             <a href="./games/taboo/index.html"
                 class="glass-panel rounded-2xl p-5 flex items-center justify-between shadow-lg border border-primary/20 hover:border-primary/40 bg-primary/[0.02] active:scale-98 transition-all group relative overflow-hidden text-left">
                 <div
@@ -108,7 +110,7 @@
                 </div>
                 <div class="flex items-center gap-4 min-w-0">
                     <div
-                        class="w-12 h-12 rounded-xl flex items-center justify-center border border-primary/20 bg-primary/10 text-primary shadow-[0_0_12px_rgba(219,22,47,0.2)] shrink-0">
+                        class="w-12 h-12 rounded-xl flex items-center justify-center border border-primary/20 bg-primary/10 text-primary shadow-[0_0_12px_rgba(0,242,254,0.2)] shrink-0">
                         <span class="material-symbols-outlined text-2xl">casino</span>
                     </div>
                     <div class="flex flex-col gap-0.5 min-w-0">
@@ -126,7 +128,7 @@
                 </div>
             </a>
 
-            <!-- Vibe X Verses (Aktif) -->
+            <!-- Vibe X Verses (Turuncu Işıma) -->
             <a href="./games/verses/index.html"
                 class="glass-panel rounded-2xl p-5 flex items-center justify-between shadow-lg border border-secondary/20 hover:border-secondary/40 bg-secondary/[0.02] active:scale-98 transition-all group relative overflow-hidden text-left">
                 <div
@@ -134,7 +136,7 @@
                 </div>
                 <div class="flex items-center gap-4 min-w-0">
                     <div
-                        class="w-12 h-12 rounded-xl flex items-center justify-center border border-secondary/20 bg-secondary/10 text-secondary shadow-[0_0_12px_rgba(219,223,172,0.2)] shrink-0">
+                        class="w-12 h-12 rounded-xl flex items-center justify-center border border-secondary/20 bg-secondary/10 text-secondary shadow-[0_0_12px_rgba(255,122,0,0.25)] shrink-0">
                         <span class="material-symbols-outlined text-2xl">history_edu</span>
                     </div>
                     <div class="flex flex-col gap-0.5 min-w-0">
