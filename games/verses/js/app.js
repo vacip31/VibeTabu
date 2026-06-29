@@ -56,6 +56,8 @@ async function loadCategoriesData() {
         categoriesData = await response.json();
         // Modal listesini doldur
         populateCategoriesModal(categoriesData);
+        // Kategori seçim pill'lerini doldur
+        renderCategoryPills(categoriesData);
     } catch (err) {
         console.error('Kategoriler yüklenirken hata oluştu:', err);
         // Çevrimdışı/Ağ hatası durumunda fallback kategori ve kelime havuzu
@@ -129,6 +131,49 @@ function startWritingTimer() {
             renderWritingPhase(); // Panel C'ye geçir
         }
     }, 1000);
+}
+
+/**
+ * Setup ekranındaki kategori pill'lerini doldurur ve seçim olayını bağlar.
+ */
+function renderCategoryPills(categories) {
+    const container = document.getElementById('setup-category-pills');
+    if (!container) return;
+
+    // Temizle (tekrar render'ı önle)
+    container.innerHTML = '';
+
+    // Rastgele pill — seçimsiz başlar
+    const randomBtn = document.createElement('button');
+    randomBtn.type = 'button';
+    randomBtn.dataset.category = 'random';
+    randomBtn.className = 'category-pill px-sm py-xs font-label-caps text-[10px] rounded-full border border-outline-variant/30 text-on-surface-variant/70 transition-all active:scale-95 hover:border-primary/50 hover:text-on-surface';
+    randomBtn.textContent = '🎲 Rastgele';
+    container.appendChild(randomBtn);
+
+    // Kategori pill'leri
+    categories.forEach(cat => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.dataset.category = cat.category;
+        btn.className = 'category-pill px-sm py-xs font-label-caps text-[10px] rounded-full border border-outline-variant/30 text-on-surface-variant/70 transition-all active:scale-95 hover:border-primary/50 hover:text-on-surface';
+        btn.textContent = cat.category;
+        container.appendChild(btn);
+    });
+
+    // Tıklama olayı
+    container.addEventListener('click', (e) => {
+        const pill = e.target.closest('.category-pill');
+        if (!pill) return;
+        // Tüm pill'leri sıfırla
+        container.querySelectorAll('.category-pill').forEach(p => {
+            p.className = 'category-pill px-sm py-xs font-label-caps text-[10px] rounded-full border border-outline-variant/30 text-on-surface-variant/70 transition-all active:scale-95 hover:border-primary/50 hover:text-on-surface';
+        });
+        // Seçiliyi vurgula
+        pill.className = 'category-pill px-sm py-xs font-label-caps text-[10px] rounded-full border border-primary bg-primary/20 text-primary transition-all active:scale-95';
+        // State güncelle
+        state.selectedCategory = (pill.dataset.category === 'random') ? null : pill.dataset.category;
+    });
 }
 
 /**
@@ -334,35 +379,6 @@ function setupEventListeners() {
     const btnTimer45 = document.getElementById('btn-timer-45');
     const btnTimer90 = document.getElementById('btn-timer-90');
 
-    // --- Kategori Seçimi ---
-    const categoryPillsContainer = document.getElementById('setup-category-pills');
-    if (categoryPillsContainer && categoriesData) {
-        // "Rastgele" pill zaten HTML'de var, geri kalanları ekle
-        categoriesData.forEach(cat => {
-            const btn = document.createElement('button');
-            btn.type = 'button';
-            btn.dataset.category = cat.category;
-            btn.className = 'category-pill px-sm py-xs font-label-caps text-[10px] rounded-full border border-outline-variant/30 text-on-surface-variant/70 transition-all active:scale-95 hover:border-primary/50 hover:text-on-surface';
-            btn.textContent = cat.category;
-            categoryPillsContainer.appendChild(btn);
-        });
-
-        categoryPillsContainer.addEventListener(clickEvent, (e) => {
-            const pill = e.target.closest('.category-pill');
-            if (!pill) return;
-            // Tüm pill'leri sıfırla
-            categoryPillsContainer.querySelectorAll('.category-pill').forEach(p => {
-                p.className = 'category-pill px-sm py-xs font-label-caps text-[10px] rounded-full border border-outline-variant/30 text-on-surface-variant/70 transition-all active:scale-95 hover:border-primary/50 hover:text-on-surface';
-            });
-            // Seçili pill'i vurgula
-            pill.className = 'category-pill px-sm py-xs font-label-caps text-[10px] rounded-full border border-primary bg-primary text-on-primary transition-all active:scale-95';
-            // State'i güncelle
-            const val = pill.dataset.category;
-            state.selectedCategory = (val === 'random') ? null : val;
-        });
-    }
-
-    
     if (btnSetupBack) {
         btnSetupBack.addEventListener(clickEvent, (e) => {
             e.preventDefault();
