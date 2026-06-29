@@ -20,6 +20,7 @@ export const state = {
     secondsRemaining: 0, // Kalan saniye
     timerIntervalId: null, // Zamanlayıcı interval ID'si
     category: "", // Aktif kategori
+    selectedCategory: null, // Kullanıcının seçtiği kategori (null = rastgele)
     keyword: "", // Aktif kelime
     keywordSynonyms: [], // Aktif kelimenin alternatif eş anlamlı kelimeleri (Fuzzy Matching için)
     spyGuessedCorrectly: false, // Herhangi bir sahte şair kelimeyi bildi mi
@@ -90,6 +91,7 @@ export function resetGame() {
     state.players = [];
     state.spyPlayer = "";
     state.category = "";
+    state.selectedCategory = null;
     state.keyword = "";
     state.spyGuessedCorrectly = false;
     state.spyGuessText = "";
@@ -153,8 +155,14 @@ export function resetGameKeepPlayers() {
 export function initializeGameFlow(categoriesList) {
     if (state.players.length < 4) return false;
     
-    // Rastgele Kategori seç
-    const randomCat = categoriesList[Math.floor(Math.random() * categoriesList.length)];
+    // Kategori seç: kullanıcı seçtiyse onu kullan, yoksa rastgele
+    let chosenCat;
+    if (state.selectedCategory) {
+        chosenCat = categoriesList.find(c => c.category === state.selectedCategory) || categoriesList[Math.floor(Math.random() * categoriesList.length)];
+    } else {
+        chosenCat = categoriesList[Math.floor(Math.random() * categoriesList.length)];
+    }
+    const randomCat = chosenCat;
     state.category = randomCat.category;
     
     // Tekrar korumalı kelime seçimi

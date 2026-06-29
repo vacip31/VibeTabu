@@ -333,6 +333,35 @@ function setupEventListeners() {
     const btnTimerOff = document.getElementById('btn-timer-off');
     const btnTimer45 = document.getElementById('btn-timer-45');
     const btnTimer90 = document.getElementById('btn-timer-90');
+
+    // --- Kategori Seçimi ---
+    const categoryPillsContainer = document.getElementById('setup-category-pills');
+    if (categoryPillsContainer && categoriesData) {
+        // "Rastgele" pill zaten HTML'de var, geri kalanları ekle
+        categoriesData.forEach(cat => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.dataset.category = cat.category;
+            btn.className = 'category-pill px-sm py-xs font-label-caps text-[10px] rounded-full border border-outline-variant/30 text-on-surface-variant/70 transition-all active:scale-95 hover:border-primary/50 hover:text-on-surface';
+            btn.textContent = cat.category;
+            categoryPillsContainer.appendChild(btn);
+        });
+
+        categoryPillsContainer.addEventListener(clickEvent, (e) => {
+            const pill = e.target.closest('.category-pill');
+            if (!pill) return;
+            // Tüm pill'leri sıfırla
+            categoryPillsContainer.querySelectorAll('.category-pill').forEach(p => {
+                p.className = 'category-pill px-sm py-xs font-label-caps text-[10px] rounded-full border border-outline-variant/30 text-on-surface-variant/70 transition-all active:scale-95 hover:border-primary/50 hover:text-on-surface';
+            });
+            // Seçili pill'i vurgula
+            pill.className = 'category-pill px-sm py-xs font-label-caps text-[10px] rounded-full border border-primary bg-primary text-on-primary transition-all active:scale-95';
+            // State'i güncelle
+            const val = pill.dataset.category;
+            state.selectedCategory = (val === 'random') ? null : val;
+        });
+    }
+
     
     if (btnSetupBack) {
         btnSetupBack.addEventListener(clickEvent, (e) => {
@@ -516,6 +545,7 @@ function setupEventListeners() {
             revealTimeout = setTimeout(() => {
                 roleCard.classList.remove('opacity-0', 'scale-95', 'pointer-events-none');
                 roleCard.classList.add('opacity-100', 'scale-100');
+                document.getElementById('dist-hold-hint').style.visibility = 'hidden';
             }, 300);
         };
         
@@ -535,6 +565,7 @@ function setupEventListeners() {
             clearTimeout(revealTimeout);
             roleCard.classList.add('opacity-0', 'scale-95', 'pointer-events-none');
             roleCard.classList.remove('opacity-100', 'scale-100');
+            document.getElementById('dist-hold-hint').style.visibility = 'visible';
             
             playVibration([20, 10, 20]);
             
