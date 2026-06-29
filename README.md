@@ -6,6 +6,10 @@
   <h3>Parti Gecelerinizi Dijital Şölene Dönüştürün 🎮✨</h3>
 
   <p align="center">
+    <a href="https://vibeparty-game.vercel.app" target="_blank" style="font-weight: bold; color: #ec4899; text-decoration: none;">🎮 Canlı Oyun / Live Demo: vibeparty-game.vercel.app 🚀</a>
+  </p>
+
+  <p align="center">
     <img src="https://img.shields.io/badge/PWA-Supported-6366f1?style=for-the-badge&logo=pwa&logoColor=white" alt="PWA Support" />
     <img src="https://img.shields.io/badge/Offline-First-059669?style=for-the-badge&logo=offline&logoColor=white" alt="Offline First" />
     <img src="https://img.shields.io/badge/UI/UX-Cyberpunk_Neon-ec4899?style=for-the-badge" alt="Cyberpunk Theme" />
