@@ -503,7 +503,7 @@ export function renderScoreboardUI(container, teams, currentRound) {
                     <span>%${Math.round(percentage)}</span>
                 </div>
                 <div class="w-full h-2 bg-white/5 rounded-full overflow-hidden border border-white/[0.02]">
-                    <div class="h-full ${barColor} rounded-full animate-width" style="width: ${percentage}%;"></div>
+                    <div class="h-full ${barColor} rounded-full animate-width" style="--bar-scale: ${percentage / 100}; transform: scaleX(0);"></div>
                 </div>
             `;
             progressContainer.appendChild(progressRow);
@@ -545,7 +545,7 @@ export function renderGameOverUI(teams) {
             
             <!-- Grafik Çubuğu -->
             <div class="w-full h-[2px] bg-white/10 rounded-full overflow-hidden mt-auto mb-5">
-                <div class="h-full bg-white/80 rounded-full animate-width" style="width: ${progressPercent}%;"></div>
+                <div class="h-full bg-white/80 rounded-full animate-width" style="--bar-scale: ${progressPercent / 100}; transform: scaleX(0);"></div>
             </div>
             
             <!-- Detaylı İstatistikler -->

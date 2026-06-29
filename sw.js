@@ -1,11 +1,14 @@
 /* VibeParty PWA Service Worker (sw.js) */
 
-const CACHE_NAME = 'vibeparty-cache-v37';
+const CACHE_NAME = 'vibeparty-cache-v40';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
     './css/styles.css',
     './css/fonts.css',
+    './css/tailwind-hub.css',
+    './css/tailwind-taboo.css',
+    './css/tailwind-verses.css',
     './manifest.json',
     './icon-192.png',
     './icon-512.png',

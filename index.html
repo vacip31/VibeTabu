@@ -11,46 +11,14 @@
     <link rel="apple-touch-icon" href="./icon-192.png" />
     <link rel="manifest" href="./manifest.json" />
 
-    <!-- Tailwind CSS ve Eklentileri -->
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-
     <!-- Yerel Font & Material Simgeleri (Çevrimdışı Çalışma Desteği) -->
     <link rel="stylesheet" href="./css/fonts.css" />
 
+    <!-- Derlenmiş Yerel Tailwind CSS -->
+    <link rel="stylesheet" href="./css/tailwind-hub.css" />
+
     <!-- Özel Tasarım Sistemimiz (Obsidian Glass) -->
     <link rel="stylesheet" href="./css/styles.css" />
-
-    <!-- Tailwind Yapılandırması (Yeni Gelişmiş Çok Renkli Neon Paleti) -->
-    <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        background: "#0b0f19",      /* Deep space dark blue */
-                        surface: "#161e31",         /* Dark obsidian blue */
-                        primary: "#00f2fe",         /* Neon Turquoise / Cyan */
-                        secondary: "#ff7a00",       /* Neon Orange */
-                        accent: "#8b5cf6",          /* Neon Violet / Purple */
-                        fuchsia: "#d946ef",         /* Neon Fuchsia / Pink */
-                        neutral: "#a6abc0",
-                        error: "#ff7a00",
-                        warning: "#00f2fe",
-                        "on-surface-variant": "#a6abc0"
-                    },
-                    spacing: {
-                        "container-padding": "24px",
-                        "gutter": "16px",
-                        "safe-area-bottom": "32px"
-                    },
-                    fontFamily: {
-                        display: ["Inter"],
-                        body: ["Inter"]
-                    }
-                }
-            }
-        }
-    </script>
     
     <!-- Portal Özel Stil Aşımı -->
     <style>

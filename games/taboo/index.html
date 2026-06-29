@@ -11,43 +11,14 @@
     <link rel="apple-touch-icon" href="./icon-192.png" />
     <link rel="manifest" href="../../manifest.json" />
 
-    <!-- Tailwind CSS ve Eklentileri -->
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-
     <!-- Yerel Font & Material Simgeleri (Çevrimdışı Çalışma Desteği) -->
     <link rel="stylesheet" href="../../css/fonts.css" />
 
+    <!-- Derlenmiş Yerel Tailwind CSS -->
+    <link rel="stylesheet" href="../../css/tailwind-taboo.css" />
+
     <!-- Özel Tasarım Sistemimiz (Obsidian Glass) -->
     <link rel="stylesheet" href="../../css/styles.css" />
-
-    <!-- Tailwind Yapılandırması (Görsel uyum için) -->
-    <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        background: "#121420",
-                        surface: "#2d3047",
-                        primary: "#1b998b",
-                        secondary: "#ff9b71",
-                        error: "#ed217c",
-                        warning: "#fffd82",
-                        "on-surface-variant": "#a6abc0"
-                    },
-                    spacing: {
-                        "container-padding": "24px",
-                        "gutter": "16px",
-                        "safe-area-bottom": "32px"
-                    },
-                    fontFamily: {
-                        display: ["Inter"],
-                        body: ["Inter"]
-                    }
-                }
-            }
-        }
-    </script>
 </head>
 
 <body class="bg-background text-on-surface antialiased h-screen w-screen overflow-hidden flex flex-col font-body relative">

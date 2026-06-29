@@ -38,4 +38,8 @@ docs/
 AGENTS.md
 .agents.md
 
+# Dependencies
+node_modules/
+
+
 
