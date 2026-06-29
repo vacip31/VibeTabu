@@ -41,6 +41,7 @@ export const views = {
     rules: document.getElementById('view-rules')
 };
 
+let currentActiveView = null;
 let isHandlingPopstate = false;
 
 // Sayfa ilk yüklendiğinde geçmişe splash durumunu yaz

@@ -1,6 +1,6 @@
 /* VibeParty PWA Service Worker (sw.js) */
 
-const CACHE_NAME = 'vibeparty-cache-v36';
+const CACHE_NAME = 'vibeparty-cache-v37';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
