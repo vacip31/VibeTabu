@@ -236,6 +236,7 @@ export function renderRoleDistribution() {
     // Panel gizleme
     panelA.classList.add('hidden');
     panelB.classList.add('hidden');
+    panelB.style.display = ''; // inline style'ı sıfırla, yoksa hidden class'ı ezemez
     panelC.classList.add('hidden');
     
     // Aktif sub-state kontrolü
